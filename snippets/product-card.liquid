@@ -2,10 +2,10 @@
     x-data="{ hovered: false }"
     @mouseenter="hovered = true"
     @mouseleave="hovered = false"
-    class="w-full py-6 px-3"
+    class="w-full py-6 px-3 z-0"
 >
-    <div class="bg-white shadow-lg rounded-lg overflow-hidden relative">
-        <a href="{{ product_item.url }}" class="block relative h-96 overflow-hidden">
+    <div class="bg-white shadow-lg rounded-lg relative">
+        <a href="{{ product_item.url }}" class="block relative h-96">
             {% assign second_image = product_item.media[1] %}
 
             <!-- Primary image -->
@@ -53,7 +53,7 @@
 
         <!-- Product info -->
         <div class="flex flex-col p-4 bg-white relative">
-            <span class="text-gray-400 text-[11px]">{{ product_item.vendor }}</span>
+            <span class="text-gray-400 text-[12px]">{{ product_item.vendor }}</span>
             <a href="{{ product_item.url }}" class="text-gray-700 text-base uppercase font-medium">
                 {{ product_item.title | truncate: 20}}
             </a>
