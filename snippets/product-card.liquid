@@ -1,0 +1,70 @@
+<div 
+    x-data="{ hovered: false }"
+    @mouseenter="hovered = true"
+    @mouseleave="hovered = false"
+    class="w-full py-6 px-3"
+>
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden relative">
+        <a href="{{ product_item.url }}" class="block relative h-60 overflow-hidden">
+            {% assign second_image = product_item.media[1] %}
+
+            <!-- Primary image -->
+            {% if product_item.featured_image %}
+                <img
+                    src="{{ product_item.featured_image | image_url: width: 512 }}"
+                    alt="{{ product_item.featured_image.alt | escape }}"
+                    width="512"
+                    height="512"
+                    class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
+                    :class="{ 'opacity-100': !hovered, 'opacity-0': hovered }"
+                >
+            {% endif %}
+
+            <!-- Secondary image -->
+            {% if second_image %}
+                <img
+                    src="{{ second_image | image_url: width: 512 }}"
+                    alt="{{ second_image.alt | escape }}"
+                    width="512"
+                    height="512"
+                    class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
+                    :class="{ 'opacity-100': hovered, 'opacity-0': !hovered }"
+                >
+            {% endif %}
+        </a>
+
+        <!-- Action buttons -->
+        {% comment %} 
+            <div
+            class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 transition-all duration-500 z-10"
+            :class="{ 'opacity-100 visible': hovered, 'opacity-0 invisible': !hovered }"
+            >
+            <a href="{{ product_item.url }}" class="bg-white text-black text-xs px-3 py-1 shadow rounded hover:bg-gray-100">
+                Quick View
+            </a>
+            <form method="post" action="{{ routes.cart_url }}">
+                <input type="hidden" name="id" value="{{ product_item.variants.first.id }}">
+                <button type="submit" class="bg-black text-white text-xs px-3 py-1 shadow rounded hover:bg-gray-800">
+                Add to Cart
+                </button>
+            </form>
+            </div> 
+        {% endcomment %}
+
+        <!-- Product info -->
+        <div class="flex flex-col p-4 bg-white relative z-0">
+            <span class="text-gray-400">{{ product_item.vendor }}</span>
+            <a href="{{ product_item.url }}" class="text-gray-700 uppercase font-medium">
+                {{ product_item.title | truncate: 20}}
+            </a>
+            <div class="flex flex-row my-1">
+                <p class="text-gray-800 text-lg pr-2">{{ product_item.price | money }}</p>
+                {% if product_item.compare_at_price > product_item.price %}
+                    <p class="text-red-700 text-xs my-auto line-through">
+                        {{ product_item.compare_at_price | money }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

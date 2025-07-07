@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+
+    {% # Load and preload the critical CSS %}
+    {{ 'application.css' | asset_url | stylesheet_tag: preload: true }}
+    <script src="{{ 'alpine-js.min.js' | asset_url }}" defer></script>
+
+    {{ content_for_header }}
+  </head>
+
+  <body>
+    {% sections 'header-group' %}
+
+    {{ content_for_layout }}
+
+    {% sections 'footer-group' %}
+  </body>
+</html>
