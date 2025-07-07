@@ -1,9 +1,9 @@
 {% case media.media_type %}
     {% when "image" %}
         <img 
-            src="{{ media | image_url: width:512 }}" 
-            width="" 
-            height="" 
+            src="{{ media | image_url: width:720 }}" 
+            width="1024" 
+            height="720" 
             alt="{{ media.preview_image.alt | default: 'Product image' }}"
             class="w-full h-full object-cover"
         >
