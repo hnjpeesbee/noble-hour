@@ -1,57 +1,36 @@
 <footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-  </div>
+    <div class="flex items-center justify-between">
+        {% render 'logo' %}
+        <div class="flex gap-x-4 md:gap-x-8 text-gray-700 font-medium">
+            {% for link in section.settings.menu.links %}
+                {{ link.title | link_to: link.url }}
+            {% endfor %}
+        </div>
+        <div class="flex align-middle gap-x-2 md:gap-x-4 pr-5">
+            {% render 'icon-fb' %}
+            {% render 'icon-ig' %}
+            {% render 'icon-x' %}
+        </div>
+    </div>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
-
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
-  </div>
+    <div class="text-gray-500 text-left ml-2">
+            &copy;
+            {{ 'now' | date: '%Y' }}
+            {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+    </div>
 </footer>
-
-{% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-  }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-  footer .footer__links,
-  footer .footer__payment {
-    display: flex;
-    gap: 1rem;
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:general.footer",
+  "name": "Footer",
   "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
-      "default": true
-    }
+        {
+            "type": "link_list",
+            "id": "menu",
+            "default": "footer",
+            "label": "Footer Menu",
+            "info": "Select a menu to be displayed in the footer."
+        }
   ]
 }
 {% endschema %}
