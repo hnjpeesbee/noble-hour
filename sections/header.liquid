@@ -1,9 +1,10 @@
 {% assign main_menu_linklist = linklists[section.settings.menu].links %}
+{% assign mobile_menu_linklist = linklists[section.settings.mobile-menu].links %}
 {% assign customer_account_required = shop.customer_accounts_enabled %}
 
-<div class="sticky bg-white" x-data="{ mobileMenuOpen: false, searchBarOpen: false }">
+<div class="sticky bg-white z-100" x-data="{ mobileMenuOpen: false, searchBarOpen: false }">
     <div class="mx-auto px-4 sm:px-6">
-        <div class="grid grid-cols-2 md:grid-cols-3 items-center pt-2 pb-6 md:space-x-10">
+        <div class="grid grid-cols-2 md:grid-cols-3 items-center pt-2 pb-6 md:space-x-10 ">
             <!-- STORE NAME / STORE LOGO -->
             <div class="flex mr-auto md:justify-start lg:flex-1">
                 <a href="{{ routes.root_url }}"><h1 class="text-xl font-bold truncate">
@@ -19,7 +20,7 @@
                             <button
                                 @click="open = !open"
                                 type="button"
-                                class="inline-flex items-center text-base text-gray-500 hover:text-gray-900"
+                                class="inline-flex items-center text-base text-gray-700 font-medium hover:text-gray-900"
                             >
                                 {{ menu-link.title }}
                                 <span x-show="!open">
@@ -34,14 +35,14 @@
                                 x-show="open"
                                 @click.away="open = false"
                                 @keydown.escape.window="open = false"
-                                class="absolute z-50 mt-5 transform w-48 sm:w-68 px-0"
+                                class="absolute left-0 z-10 mt-5 transform w-48 sm:w-64 px-0"
                             >
-                                <div class="block shadow-lg ring-opacity-5 overflow-hidden rounded-md z-50">
+                                <div class="shadow-lg ring-opacity-5 rounded-md">
                                     <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-3">
                                         {% for child-link in menu-link.links %}
                                         <a
                                             href="{{ child-link.url }}"
-                                            class="-m-3 p-4 flex items start rounded-md hover:bg-gray-100"
+                                            class="-m-3 p-1 flex items start rounded-md hover:bg-gray-100"
                                         >
                                             <div class="ml-4">
                                             <p class="text-gray-900 text-base font-medium break-words">
@@ -60,8 +61,8 @@
                                 href="{{ menu-link.url }}"
                                 class="
                                 text-base
-                                {% if menu-link.active == true %} text-blue-500 hover:text-blue-900
-                                {% else %} text-gray-500 hover:text-gray-900
+                                {% if menu-link.active == true %} text-blue-300 font-medium hover:text-blue-700
+                                {% else %} text-gray-700 font-medium hover:text-gray-900
                                 {% endif %}
                                 "
                             >
@@ -137,7 +138,7 @@
                     <!-- NAVIGATION LINKS FOR MOBILE MENU -->
                     <div class="pt-3 z-50">
                         <nav class="grid gap-y-7">
-                            {% for menu-link in linklists['main-menu'].links %}
+                            {% for menu-link in mobile_menu_linklist %}
                                 {% assign link_handle = menu-link.handle | replace: '-', '_' %}
                                 
                                 {% if menu-link.links != blank %}
@@ -238,6 +239,12 @@
             "label": "Header Menu",
             "default": "main-menu",
             "info": "Select a menu to be displayed in the header."
+        },
+        {
+            "type": "link_list",
+            "id": "mobile-menu",
+            "label": "Header Mobile Menu",
+            "info": "Create a custom menu to be displayed in the header mobile view."
         }
     ]
 }
