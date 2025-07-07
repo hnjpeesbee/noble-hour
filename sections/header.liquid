@@ -169,6 +169,7 @@
                                     </a>
                                 {% endif %}
                             {% endfor %}
+                            <script>console.log("{{ customer_account_required }}")</script>
                             {% if customer_account_required %}
                                 <a href="{{ routes.account_login_url }}" class="text-base text-gray-500 hover:text-gray-900">Login</a>
                                 <a href="{{ routes.account_register_url }}" class="text-base text-gray-500 hover:text-gray-900">Register</a>
