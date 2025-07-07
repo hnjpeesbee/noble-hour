@@ -36,7 +36,7 @@
                                 @keydown.escape.window="open = false"
                                 class="absolute left-0 z-10 mt-5 transform w-48 sm:w-64 px-0"
                             >
-                                <div class="shadow-lg ring-opacity-5 overflow-hidden rounded-md">
+                                <div class="block shadow-lg ring-opacity-5 overflow-hidden rounded-md z-100">
                                     <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-3">
                                         {% for child-link in menu-link.links %}
                                         <a
@@ -139,6 +139,7 @@
                         <nav class="grid gap-y-7">
                             {% for menu-link in linklists['main-menu'].links %}
                                 {% assign link_handle = menu-link.handle | replace: '-', '_' %}
+                                
                                 {% if menu-link.links != blank %}
                                     <div x-data="{ {{ link_handle }}: false }" class="relative">
                                         <button
@@ -169,7 +170,21 @@
                                     </a>
                                 {% endif %}
                             {% endfor %}
-                            <script>console.log("{{ customer_account_required }}")</script>
+                            <button 
+                                @click="searchBarOpen = true"
+                                type="button"
+                                class="whitespace-nowrap text-base text-left text-gray-500 hover:text-gray-900"
+                                title="Search"
+                            >
+                                Search
+                            </button>
+                            <a 
+                                href="{{ routes.cart_url }}" 
+                                class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900"
+                                title="Cart"
+                            >
+                                Your cart
+                            </a>
                             {% if customer_account_required %}
                                 <a href="{{ routes.account_login_url }}" class="text-base text-gray-500 hover:text-gray-900">Login</a>
                                 <a href="{{ routes.account_register_url }}" class="text-base text-gray-500 hover:text-gray-900">Register</a>
@@ -213,7 +228,7 @@
             "type": "text",
             "id": "mobile_menu_title",
             "label": "Mobile Menu Title",
-            "default": "Paws and Claws",
+            "default": "Noble Hour",
             "info": "This title will be displayed at the top of the mobile menu."
         },
         {
