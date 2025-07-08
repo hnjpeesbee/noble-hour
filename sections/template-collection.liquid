@@ -52,6 +52,15 @@
         class="fixed top-0 left-0 w-64 h-screen bg-white shadow z-[110]"
     >
         <div class="sticky top-0 p-6 overflow-y-auto h-screen">
+            <select id="sort-by">
+                {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+                {% for option in collection.sort_options %}
+                    <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+                    {{ option.name }}
+                    </option>
+                {% endfor %}
+            </select>
             <h2 class="text-lg font-semibold mb-4">Filter Products</h2>
 
             <!-- Example Filter Section -->
@@ -91,3 +100,28 @@
     ]
 }
 {% endschema %}
+
+<script>
+  Shopify.queryParams = {};
+
+  // Preserve existing query parameters
+  if (location.search.length) {
+    var params = location.search.substr(1).split('&');
+
+    for (var i = 0; i < params.length; i++) {
+      var keyValue = params[i].split('=');
+
+      if (keyValue.length) {
+        Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
+      }
+    }
+  }
+
+  // Update sort_by query parameter on select change
+  document.querySelector('#sort-by').addEventListener('change', function(e) {
+    var value = e.target.value;
+
+    Shopify.queryParams.sort_by = value;
+    location.search = new URLSearchParams(Shopify.queryParams).toString();
+  });
+</script>
