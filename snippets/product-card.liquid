@@ -11,7 +11,7 @@
             <!-- Primary image -->
             {% if product_item.featured_image %}
                 <img
-                    src="{{ product_item.featured_image | image_url: width: 512 }}"
+                    src="{{ product_item.featured_image | image_url: width: 1024 }}"
                     alt="{{ product_item.featured_image.alt | escape }}"
                     width="512"
                     height="512"
@@ -23,7 +23,7 @@
             <!-- Secondary image -->
             {% if second_image %}
                 <img
-                    src="{{ second_image | image_url: width: 512 }}"
+                    src="{{ second_image | image_url: width: 1024 }}"
                     alt="{{ second_image.alt | escape }}"
                     width="512"
                     height="512"
