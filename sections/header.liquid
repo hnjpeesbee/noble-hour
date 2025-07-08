@@ -198,14 +198,14 @@
         </div>
     </div>
     
-
+    <!-- SEARCH BAR -->
     <div 
         x-show="searchBarOpen"
         @click.away="searchBarOpen = false"
         @keydown.escape.window="searchBarOpen = false"
         x-transition
         x-cloak
-        class="w-full absolute top-0 bg-gray-50 transition transform duration-1000 ease-out"
+        class="w-full absolute top-0 bg-gray-200 transition transform duration-1000 ease-out"
     >
         <button @click="searchBarOpen = false" class="absolute top-0 right-0 mt-5 mr-5 text-gray-500">
             {% render 'icon-close' %}
