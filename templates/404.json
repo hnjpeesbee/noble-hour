@@ -1,20 +1,11 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
- {
-  "sections": {
-    "main": {
-      "type": "404",
-      "settings": {}
-    }
-  },
-  "order": [
-    "main"
-  ]
+{
+    "name": "Template 404", //name of the template in the admin shopify
+    "sections": {
+        "template": { //identifier for the section
+            "type": "template-404", //liquid file under templates directory
+        },
+    },
+    "order": [
+        "template"
+    ] //order of the sections when multiple sections are present
 }
