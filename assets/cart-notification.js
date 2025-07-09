@@ -74,7 +74,9 @@ class CartNotification extends HTMLElement {
             const headerDOM = new DOMParser().parseFromString(headerHTML, 'text/html');
             const newBubble = headerDOM.querySelector('[data-cart-bubble]');
             const currentBubble = document.querySelector('[data-cart-bubble]');
+            
             if (newBubble && currentBubble) {
+                currentBubble.classList.add('animate-bounce');
                 currentBubble.innerHTML = newBubble.innerHTML;
             }
 
