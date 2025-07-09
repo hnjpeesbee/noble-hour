@@ -10,11 +10,21 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-section",
+      "type": "template-hero",
+      "settings": {}
+    },
+    "gallery": {
+      "type": "template-product-showcase",
+      "settings": {}
+    },
+    "collections": {
+      "type": "template-list-collections",
       "settings": {}
     }
   },
   "order": [
-    "hero"
+    "hero",
+    "collections",
+    "gallery"
   ]
 }
