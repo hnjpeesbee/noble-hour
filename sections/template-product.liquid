@@ -2,6 +2,8 @@
 {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
 {{ 'template-product.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
+<script src="{{ 'swiper.js' | asset_url }}" defer></script>
+<script src="{{ 'variant-selector.js' | asset_url }}" defer></script>
 
 {% assign selected_variant = product.selected_or_first_available_variant %}
 
@@ -54,13 +56,13 @@
                             </div>
                         {% when "price" %}
                             <div id="price-{{ section.id }}" class="my-3">
-                                <span class="text-base text-red-700 line-through">
-                                    {{ selected_variant.compare_at_price | money }}    
-                                </span>    
                                 <span class="text-lg text-gray-900">
                                     {{ selected_variant.price | money }}
                                 </span>
                                 {% if selected_variant.price < selected_variant.compare_at_price %}
+                                    <span class="text-base text-red-700 line-through">
+                                        {{ selected_variant.compare_at_price | money }}    
+                                    </span>    
                                     <span class="px-5 py-1 text-sm font-bold bg-red-600 rounded-xl text-white mx-4">
                                         Sale
                                     </span>
@@ -75,22 +77,22 @@
                                                 {{ option.name }}
                                             </label>
                                             <div class="my-2">
-                                                <select 
-                                                    name="options[{{ option.name | escape }}]" 
-                                                    id="Option-{{ section.id }}-{{ forloop.index0 }}" 
-                                                    class="w-full border py-4 px-3"
-                                                >
+                                                <div class="flex flex-wrap gap-2">
                                                     {% for value in option.values %}
-                                                        <option 
-                                                            value="{{ value | escape }}"
-                                                            {% if option.selected_value == value %}
-                                                                selected="selected"
-                                                            {% endif %}
-                                                        >
-                                                            {{ value }}
-                                                        </option>
+                                                        <label class="cursor-pointer">
+                                                            <input
+                                                                type="radio"
+                                                                name="options[{{ option.name | escape }}]"
+                                                                value="{{ value | escape }}"
+                                                                class="sr-only peer"
+                                                                {% if option.selected_value == value %}checked{% endif %}
+                                                            >
+                                                            <div class="px-4 py-2 border border-gray-300 rounded peer-checked:bg-gray-900 peer-checked:text-white">
+                                                                {{ value }}
+                                                            </div>
+                                                        </label>
                                                     {% endfor %}
-                                                </select>
+                                                </div>
                                             </div>
                                         {% endfor %}
 
@@ -148,105 +150,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    class VariantSelector extends HTMLElement {
-        constructor() {
-            super();
-            this.addEventListener("change", this.onVariantChange);
-        }
-        onVariantChange() {
-            this.getSelectedOptions();
-            this.getSelectedVariant();
-
-            if(this.currentVariant) {
-                this.updateURL();
-                this.updateFormID();
-                this.updatePrice();
-            }
-        }
-
-        getSelectedOptions() {
-            const selects = this.querySelectorAll('select');
-            this.options = Array.from(selects).map(select => select.value);
-            console.log(this.options);
-        }
-
-        getVariantJSON() {
-            const selects = this.querySelector('script[type="application/json"]');
-            this.variantData = this.variantData || JSON.parse(selects.textContent);
-            return this.variantData;
-        }
-
-        getSelectedVariant() {
-            const variantJSON = this.getVariantJSON(); // Call the method correctly
-            {% comment %} this.currentVariant = variantJSON.find(
-                (variant) => {
-                    const findings = !variant.options.map(
-                        (option, index) => {
-                            return this.options[index] !== option;
-                        }
-                    ).includes(true);
-
-                    return variant;
-                }
-            ); {% endcomment %}
-
-            this.currentVariant = variantJSON.find((variant) => {
-                // Check if all selected options match the variant options
-                return variant.options.every((option, index) => {
-                    return this.options[index] === option;
-                });
-            });
-
-            console.log(this.currentVariant);
-        }
-
-        updateURL() {
-            if(!this.currentVariant) return;
-            window.history.replaceState({}, '', `${this.dataset.url}?variant=${this.currentVariant.id}`);
-        }
-
-        updateFormID() {
-            const form = document.getElementById("product-form");
-            const input = form.querySelector('input[name="id"]');
-            input.value = this.currentVariant.id;
-        }
-
-        updatePrice() {
-            fetch(`${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`)
-            .then((response) => response.text())
-            .then((responseText) => {
-                const id = `price-${this.dataset.section}`;
-                const html = new DOMParser().parseFromString(responseText, 'text/html');
-
-                const oldPrice = document.getElementById(id);
-                const newPrice = html.getElementById(id);
-
-                if(oldPrice && newPrice) oldPrice.innerHTML = newPrice.innerHTML;
-            });
-        }
-    }
-
-    customElements.define('variant-selector', VariantSelector);
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const swiper = new Swiper('.swiper', {
-            direction: 'horizontal',
-
-            pagination: {
-                el: '.swiper-pagination'
-            },
-
-            navigation: {
-                prevEl: '.swiper-button-prev',
-                nextEl: '.swiper-button-next'
-            }
-        });
-    });
-</script>
 
 {% schema %}
     {
