@@ -1,31 +1,34 @@
 <!doctype html>
 <html>
-  <head>
-    <title>{{ page_title }}</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="description" content="{{ page_description | escape }}">
-    <link rel="canonical" href="{{ canonical_url }}">
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    {{ content_for_header }}
+    <head>
+        <title>{{ page_title }}</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="{{ page_description | escape }}">
+        <link rel="canonical" href="{{ canonical_url }}">
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+        {{ content_for_header }}
 
-    <!-- Header hook for plugins -->
-    {{ 'application.css' | asset_url | stylesheet_tag }}
-    <script src="{{ 'alpine-js.min.js' | asset_url }}" defer></script>
+        <!-- Header hook for plugins -->
+        {{ 'application.css' | asset_url | stylesheet_tag }}
+        
+        <script src="{{ 'alpine-js.min.js' | asset_url }}" defer></script>
+        <script src="{{ 'cart-notification.js' | asset_url }}" defer></script>
 
-    {% comment %} <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script> {% endcomment %}
+        {% comment %} <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script> {% endcomment %}
 
-  </head>
-  <body>
-    {% sections 'header-group' %}
-    
+    </head>
+    <body>
+        {% sections 'header-group' %}
+        
         <main role="main"> 
             {{ content_for_layout }}
         </main>
 
-        {% section 'cart-modal' %}
-        {% section 'template-cart-modal' %}
-        <script src="{{ 'cart-modal.js' | asset_url }}" defer></script>
-    {% sections 'footer-group' %}
-  </body>
+        <cart-notification>
+            {% section 'cart-notification' %}
+        </cart-notification>
+
+        {% sections 'footer-group' %}
+    </body>
 </html>

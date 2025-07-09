@@ -15,7 +15,10 @@
   </svg>
 
   {% if cart.item_count > 0 %}
-    <span class="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] leading-none px-1.5 py-0.5 rounded-full">
+    <span 
+        data-cart-bubble 
+        class="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] leading-none px-1.5 py-0.5 rounded-full"
+    >
       {{ cart.item_count }}
     </span>
   {% endif %}
