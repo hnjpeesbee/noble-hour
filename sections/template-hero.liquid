@@ -13,7 +13,7 @@
         <div class="absolute text-white md:block items-center top-1/2 md:top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
             <h1 class="font-bold text-3xl lg:text-5xl">{{ section.settings.tagline }}</h1>
             <p class="font-bold text-base md:text-md my-4">{{ section.settings.description }}</p>
-            <a href="{{ routes.collections_url }}" class=" bg-amber-300 text-black py-3 rounded-xl px-6">Watch collections</a>
+            {% comment %} <a href="{{ routes.collections_url }}" class=" bg-amber-300 text-black py-3 rounded-xl px-6">Watch collections</a> {% endcomment %}
         </div>
     {% else %}
         <div class="hidden md:block">
@@ -31,8 +31,8 @@
 
 {% schema %}
 {
-  "name": "Hero Section",
-  "settings": [
+    "name": "Hero Section",
+    "settings": [
         {
             "type": "text",
             "id": "tagline",
@@ -54,10 +54,10 @@
         }
 
     ],
-  "presets": [
-    {
-      "name": "Hero Section",
-    }
-  ]
+    "presets": [
+        {
+        "name": "Hero Section",
+        }
+    ]
 }
 {% endschema %}
