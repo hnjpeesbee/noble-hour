@@ -31,5 +31,8 @@ function showCartModal() {
       modal.classList.remove('hidden');
       modal.classList.add('flex');
 
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 5000);
     });
 }

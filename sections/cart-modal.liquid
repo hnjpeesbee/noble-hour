@@ -4,7 +4,7 @@
         data-key="{{ item.key }}"
         data-title="{{ item.product.title | escape_once }}"
         data-quantity="{{ item.quantity }}"
-        data-price="{{ item.final_line_price | money | strip_html }}"
+        data-price="{{ item.final_line_price | money }}"
         data-image="{% if item.image %}{{ item.image | image_url: width: 160 }}{% else %}/placeholder.png{% endif %}"
     ></div>
 {% endfor %}
