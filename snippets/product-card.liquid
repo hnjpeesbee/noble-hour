@@ -58,7 +58,7 @@
                 {{ product_item.title | truncate: 20}}
             </a>
             <div class="flex flex-row my-1">
-                <p class="text-gray-800 text-sm pr-2">{{ product_item.price | money }}</p>
+                <p class="text-gray-800 text-sm pr-2">{{ product_item.price_min | money }} {% if product_item.price_min < product_item.price_max%}- {{ product_item.price_max | money }} {% endif %}</p>
                 {% if product_item.compare_at_price > product_item.price %}
                     <p class="text-red-700 text-xs my-auto line-through">
                         {{ product_item.compare_at_price | money }}
