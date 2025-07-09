@@ -1,0 +1,41 @@
+<div class="max-w-6xl mx-auto my-8">
+    <div class="grid-cols-1">
+        <div>
+            image
+        </div>
+
+        <div>
+            info
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "Limited Edition",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "default": "Limited Edition",
+                "label": "Title"
+            },
+            {
+                "type": "text",
+                "id": "description",
+                "label": "Description"
+            },
+            {
+                "type": "text",
+                "id": "button_label",
+                "label": "Button Label"
+
+            }
+        ],
+        "presets": [
+            {
+                "name": "Limited Edition"
+            }
+        ]
+    }
+{% endschema %}

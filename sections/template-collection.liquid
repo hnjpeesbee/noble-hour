@@ -51,11 +51,17 @@
         class="fixed top-0 left-0 w-64 h-screen bg-white shadow z-[110]"
     >
         <div class="sticky top-0 p-6 overflow-y-auto h-screen">
-            <h2 class="text-lg font-semibold mb-4">Filter Products</h2>
 
-            {% comment %} 
-            Build unique option names and values 
-            {% endcomment %}
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-lg font-semibold">Filter Products</h2>
+                <button 
+                    type="button" 
+                    class="text-sm text-white hover:underline bg-gray-900 py-1 px-4 rounded-lg"
+                    onclick="clearSwatchFilters()"
+                >
+                    Clear
+                </button>
+            </div>
 
             {% assign option_values = '' %}
             {% assign vendors = '' %}
@@ -86,14 +92,19 @@
                     <div class="flex flex-wrap gap-2">
                         {% for value in option_array %}
                             {% if value != '' %}
-                                <button 
-                                    type="button"
-                                    class="variant-filter-btn px-3 py-1 border rounded text-sm hover:bg-gray-100"
+                                <label class="relative cursor-pointer">
+                                    <input
+                                    type="radio"
+                                    name="filter_{{ option_name | downcase }}"
+                                    value="{{ value }}"
+                                    class="sr-only peer"
                                     data-filter-name="{{ option_name | downcase }}"
                                     data-filter-value="{{ value }}"
-                                >
+                                    >
+                                    <span class="px-3 py-1 border rounded text-sm peer-checked:bg-gray-900 peer-checked:text-white">
                                     {{ value }}
-                                </button>
+                                    </span>
+                                </label>
                             {% endif %}
                         {% endfor %}
                     </div>
@@ -105,14 +116,19 @@
                 <div class="flex flex-wrap gap-2">
                     {% for vendor in vendor_array %}
                         {% if vendor != '' %}
-                            <button 
-                                type="button"
-                                class="variant-filter-btn px-3 py-1 border rounded text-sm hover:bg-gray-100"
+                        <label class="relative cursor-pointer">
+                            <input
+                                type="radio"
+                                name="filter_vendor"
+                                value="{{ vendor }}"
+                                class="sr-only peer"
                                 data-filter-name="vendor"
                                 data-filter-value="{{ vendor }}"
                             >
+                            <span class="px-3 py-1 border rounded text-sm peer-checked:bg-gray-900 peer-checked:text-white">
                                 {{ vendor }}
-                            </button>
+                            </span>
+                        </label>
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -120,6 +136,13 @@
         </div>
     </aside>
 </div>
+
+<script>
+  function clearSwatchFilters() {
+    const swatches = document.querySelectorAll('input[type="radio"][name^="filter_"]');
+    swatches.forEach(input => input.checked = false);
+  }
+</script>
 
 {% schema %}
 {
