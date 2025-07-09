@@ -20,9 +20,12 @@
     {% sections 'header-group' %}
     
         <main role="main"> 
-        {{ content_for_layout }}
+            {{ content_for_layout }}
         </main>
 
+        {% section 'cart-modal' %}
+        {% section 'template-cart-modal' %}
+        <script src="{{ 'cart-modal.js' | asset_url }}" defer></script>
     {% sections 'footer-group' %}
   </body>
 </html>
