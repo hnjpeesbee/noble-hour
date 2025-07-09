@@ -73,7 +73,7 @@ class CartNotification extends HTMLElement {
             const headerHTML = data['header'];
             const headerDOM = new DOMParser().parseFromString(headerHTML, 'text/html');
             const newBubble = headerDOM.querySelector('[data-cart-bubble]');
-            const currentBubble = this.querySelector('[data-cart-bubble]');
+            const currentBubble = document.querySelector('[data-cart-bubble]');
             if (newBubble && currentBubble) {
                 currentBubble.innerHTML = newBubble.innerHTML;
             }
