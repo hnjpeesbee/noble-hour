@@ -1,0 +1,13 @@
+<div id="cart-modal" class="fixed top-5 right-5 z-50 max-w-sm w-full bg-white shadow-xl border rounded-xl p-4 hidden">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-semibold">Cart Updated</h2>
+        <button id="cart-modal-close" class="text-gray-500 hover:text-gray-700" aria-label="Close">&times;</button>
+    </div>
+
+    <div id="cart-modal-items" class="space-y-4 max-h-[300px] overflow-y-auto"></div>
+
+    <div class="mt-6 flex flex-col gap-2">
+        <a href="{{ routes.cart_url }}" class="bg-gray-100 text-center text-sm py-2 rounded hover:bg-gray-200">View Cart</a>
+        <a href="/checkout" class="bg-black text-white text-center text-sm py-2 rounded hover:bg-gray-800">Checkout</a>
+    </div>
+</div>
