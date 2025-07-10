@@ -12,12 +12,12 @@
                 />
             </div>
             
-            <div class="space-y-8">
-                <h2 class="text-6xl font-bold text-gray-800">{{ limited_product.title }}</h2>
-                <p class="text-gray-600">
+            <div class="space-y-8 px-4">
+                <h2 class="text-3xl md:text-4xl lg:text-6xl font-bold text-gray-800">{{ limited_product.title }}</h2>
+                <p class="text-sm md:text-base text-gray-600">
                     {{ limited_product.description | truncatewords: 50 }}
                 </p>
-                <a href="{{  limited_product.url }}" class="inline-block bg-black text-white px-6 py-3 rounded-md shadow hover:bg-gray-800 transition">
+                <a href="{{  limited_product.url }}" class="inline-block bg-black text-white px-3 md:px-6 py-1.5 md:py-3 rounded-md shadow hover:bg-gray-800 transition">
                     See Details
                 </a>
             </div>
