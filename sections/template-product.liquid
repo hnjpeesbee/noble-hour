@@ -4,6 +4,7 @@
 <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
 <script src="{{ 'swiper.js' | asset_url }}" defer></script>
 <script src="{{ 'variant-selector.js' | asset_url }}" defer></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer></script>
 
 {% assign selected_variant = product.selected_or_first_available_variant %}
 
@@ -36,7 +37,7 @@
                 <div class="swiper-button-next"></div>
             </div>
         </div>
-        <div class="product--information sticky top-5 p-2">
+        <product-form class="product--information sticky top-5 p-2">
             {% form "product", product, id:"product-form", novalidate: "novalidate"%}
                 <input type="hidden" name="id" value="{{ selected_variant.id }}">
 
@@ -163,7 +164,7 @@
                     {% endcase %}
                 {% endfor %}
             {% endform %}
-        </div>
+        </product-form>
     </div>
 </div>
 
