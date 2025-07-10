@@ -20,11 +20,16 @@
     "collections": {
       "type": "template-list-collections",
       "settings": {}
+    },
+    "limited": {
+      "type": "template-limited-edition",
+      "settings": {}
     }
   },
   "order": [
     "hero",
     "collections",
+    "limited",
     "gallery"
   ]
 }
