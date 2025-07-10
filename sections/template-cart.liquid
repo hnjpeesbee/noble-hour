@@ -12,7 +12,7 @@
       </div>
     </div>
   </div>
-  <cart-section>
+  <cart-section data-url="{{ routes.cart_url }}" data-section="{{ section.id }}">
     <div id="cart-section" class="max-w-6xl flex flex-col my-10 mx-auto">
       <form action="{{ routes.cart_url }}" method="POST" novalidate>
         <table class="table-auto divide-y divide-gray-200 my-4 mx-4 w-full">
