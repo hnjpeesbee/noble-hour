@@ -1,10 +1,10 @@
 {
-    "sections": {
-        "template": {
-            "type": "template-collection",
-        }
-    },
-    "order": [
-        "template",
-    ]
+  "sections": {
+    "template": {
+      "type": "template-collection",
+    }
+  },
+  "order": [
+    "template",
+  ]
 }

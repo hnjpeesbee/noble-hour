@@ -1,50 +1,56 @@
 <div class="flex flex-col items-center my-8 z-0">
-    <h1 class="text-4xl font-bold my-10">{{ section.settings.title }}</h1>
+  <h1 class="text-4xl font-bold my-10">{{ section.settings.title }}</h1>
 
-    <div class="max-w-6xl mx-auto my-3">
-        <div class="flex flex-wrap justify-center gap-8">
-            {% for collection in collections %}
-                {% if collection.all_products_count > 0 %}
-                    <div class="w-80 py-6 px-6">
-                        <div class="bg-white overflow-hidden">
-                            <a href="{{ collection.url }}">
-                                <div class="w-full h-80 overflow-hidden">
-                                    {% if collection.featured_image != blank %}
-                                        {% assign collection_image = collection.featured_image %}
-                                    {% else %}
-                                        {% assign collection_image = collection.products.first.image %}
-                                    {% endif %}
+  <div class="max-w-6xl mx-auto my-3">
+    <div class="flex flex-wrap justify-center gap-8">
+      {% for collection in collections %}
+        {% if collection.all_products_count > 0 %}
+          <div class="w-80 py-6 px-6">
+            <div class="bg-white overflow-hidden">
+              <a href="{{ collection.url }}">
+                <div class="w-full h-80 overflow-hidden">
+                  {% if collection.featured_image != blank %}
+                    {% assign collection_image = collection.featured_image %}
+                  {% else %}
+                    {% assign collection_image = collection.products.first.image %}
+                  {% endif %}
 
-                                    <img class="w-full h-full object-cover transition duration:800 ease-in-out transform hover:scale-125" src="{{ collection_image | image_url: width: 512 }}" height="" width="" alt="{{ collection.title | escape}}">
-                                </div>
-                            </a>
+                  <img
+                    class="w-full h-full object-cover transition duration:800 ease-in-out transform hover:scale-125"
+                    src="{{ collection_image | image_url: width: 512 }}"
+                    height=""
+                    width=""
+                    alt="{{ collection.title | escape}}"
+                  >
+                </div>
+              </a>
 
-                            <div class="p-4">
-                                <h1 class="text-2xl font-medium text-gray-700 text-center">{{ collection.title }}</h1>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
+              <div class="p-4">
+                <h1 class="text-2xl font-medium text-gray-700 text-center">{{ collection.title }}</h1>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
+  </div>
 </div>
 
 {% schema %}
+{
+  "name": "Collection Lists",
+  "settings": [
     {
-        "name": "Collection Lists",
-        "settings": [
-            {
-                "type": "text",
-                "id": "title",
-                "default": "Collections",
-                "label": "Title"
-            }
-        ],
-        "presets": [
-            {
-                "name": "Collection Lists"
-            }
-        ]
+      "type": "text",
+      "id": "title",
+      "default": "Collections",
+      "label": "Title"
     }
+  ],
+  "presets": [
+    {
+      "name": "Collection Lists"
+    }
+  ]
+}
 {% endschema %}

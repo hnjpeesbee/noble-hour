@@ -1,45 +1,48 @@
 {% assign limited_product = all_products[section.settings.product_handle] %}
 <div class="bg-gray-50 py-12">
-    <div class="max-w-6xl mx-auto my-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-                <img
-                    src="{{ limited_product.featured_image | image_url: width: 1024 }}"
-                    alt="{{ limited_product.title }}"
-                    class="w-full h-auto rounded-lg shadow-md object-cover"
-                    width="600"
-                    height="400"
-                />
-            </div>
-            
-            <div class="space-y-8 px-4">
-                <h2 class="text-3xl md:text-4xl lg:text-6xl font-bold text-gray-800">{{ limited_product.title }}</h2>
-                <p class="text-sm md:text-base text-gray-600">
-                    {{ limited_product.description | truncatewords: 50 }}
-                </p>
-                <a href="{{  limited_product.url }}" class="inline-block bg-black text-white px-3 md:px-6 py-1.5 md:py-3 rounded-md shadow hover:bg-gray-800 transition">
-                    See Details
-                </a>
-            </div>
-        </div>
+  <div class="max-w-6xl mx-auto my-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div>
+        <img
+          src="{{ limited_product.featured_image | image_url: width: 1024 }}"
+          alt="{{ limited_product.title }}"
+          class="w-full h-auto rounded-lg shadow-md object-cover"
+          width="600"
+          height="400"
+        >
+      </div>
+
+      <div class="space-y-8 px-4">
+        <h2 class="text-3xl md:text-4xl lg:text-6xl font-bold text-gray-800">{{ limited_product.title }}</h2>
+        <p class="text-sm md:text-base text-gray-600">
+          {{ limited_product.description | truncatewords: 50 }}
+        </p>
+        <a
+          href="{{  limited_product.url }}"
+          class="inline-block bg-black text-white px-3 md:px-6 py-1.5 md:py-3 rounded-md shadow hover:bg-gray-800 transition"
+        >
+          See Details
+        </a>
+      </div>
     </div>
+  </div>
 </div>
 
 {% schema %}
+{
+  "name": "Limited Edition",
+  "settings": [
     {
-        "name": "Limited Edition",
-        "settings": [
-            {
-                "type": "text",
-                "id": "product_handle",
-                "label": "Product Handle",
-                "info": "Enter the handle of the limited edition product to display its image and details."
-            }
-        ],
-        "presets": [
-            {
-                "name": "Limited Edition"
-            }
-        ]
+      "type": "text",
+      "id": "product_handle",
+      "label": "Product Handle",
+      "info": "Enter the handle of the limited edition product to display its image and details."
     }
+  ],
+  "presets": [
+    {
+      "name": "Limited Edition"
+    }
+  ]
+}
 {% endschema %}

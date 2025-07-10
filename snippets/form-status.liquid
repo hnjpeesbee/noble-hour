@@ -1,37 +1,37 @@
 {% if form_status.errors %}
-    <div
-        x-data="{ show: true }"
-        x-init="setTimeout(() => show = false, 10000)"
-        x-show="show"
-        class="flex flex-row items-center w-full mt-3 p-5"
-    >
-        <div class="text-red-500">
-            {% render 'icon-failed' %}
-        </div>
-        <div class="ml-2 text-sm font-medium">{{ error_message }}</div>
+  <div
+    x-data="{ show: true }"
+    x-init="setTimeout(() => show = false, 10000)"
+    x-show="show"
+    class="flex flex-row items-center w-full mt-3 p-5"
+  >
+    <div class="text-red-500">
+      {% render 'icon-failed' %}
     </div>
-    <ul
-        x-data="{ show: true }"
-        x-init="setTimeout(() => show = false, 10000)"
-        x-show="show"
-        class="px-4 mb-3 ml-7 list-decimal"
-    >
-        {% for error in form_status.errors %}
-            <li>
-                <span>{{ form_status.errors.messages[error] }}</span>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="ml-2 text-sm font-medium">{{ error_message }}</div>
+  </div>
+  <ul
+    x-data="{ show: true }"
+    x-init="setTimeout(() => show = false, 10000)"
+    x-show="show"
+    class="px-4 mb-3 ml-7 list-decimal"
+  >
+    {% for error in form_status.errors %}
+      <li>
+        <span>{{ form_status.errors.messages[error] }}</span>
+      </li>
+    {% endfor %}
+  </ul>
 {% elsif form_status.posted_successfully? %}
-    <div
-        x-data="{ show: true }"
-        x-init="setTimeout(() => show = false, 10000)"
-        x-show="show"
-        class="flex flex-row items-center w-full my-3 p-5"
-    >
-        <div class="text-green-500">
-            {% render 'icon-success' %}
-        </div>
-        <div class="ml-2 text-sm font-medium">{{ success_message }}</div>
+  <div
+    x-data="{ show: true }"
+    x-init="setTimeout(() => show = false, 10000)"
+    x-show="show"
+    class="flex flex-row items-center w-full my-3 p-5"
+  >
+    <div class="text-green-500">
+      {% render 'icon-success' %}
     </div>
+    <div class="ml-2 text-sm font-medium">{{ success_message }}</div>
+  </div>
 {% endif %}

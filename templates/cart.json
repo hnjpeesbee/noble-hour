@@ -1,18 +1,18 @@
 {
-    "sections": {
-        "template": {
-            "type": "template-cart",
-            "blocks": {
-                "checkout-button": {
-                    "type": "checkout_button",
-                }
-            },
-            "block_order": [
-                "checkout-button"
-            ]
+  "sections": {
+    "template": {
+      "type": "template-cart",
+      "blocks": {
+        "checkout-button": {
+          "type": "checkout_button",
         }
-    },
-    "order": [
-        "template"
-    ]
+      },
+      "block_order": [
+        "checkout-button"
+      ]
+    }
+  },
+  "order": [
+    "template"
+  ]
 }

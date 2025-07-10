@@ -1,18 +1,18 @@
 {% case media.media_type %}
-    {% when "image" %}
-        <img 
-            src="{{ media | image_url: width:720 }}" 
-            width="1024" 
-            height="720" 
-            alt="{{ media.preview_image.alt | default: 'Product image' }}"
-            class="w-full h-full object-cover"
-        >
-    {% when "external_video" %}
-        {{ media | external_video_tag: class: "w-full h-80 object-cover" }}
-    {% when "video" %}
-        {{ media | video_tag: controls: true, class: "w-full h-full object-cover" }}
-    {% when "model" %}
-        {{ media | model_viewer_tag }}
-    {% else %}
-        {{ media | media_tag }}
+  {% when 'image' %}
+    <img
+      src="{{ media | image_url: width:720 }}"
+      width="1024"
+      height="720"
+      alt="{{ media.preview_image.alt | default: 'Product image' }}"
+      class="w-full h-full object-cover"
+    >
+  {% when 'external_video' %}
+    {{ media | external_video_tag: class: 'w-full h-80 object-cover' }}
+  {% when 'video' %}
+    {{ media | video_tag: controls: true, class: 'w-full h-full object-cover' }}
+  {% when 'model' %}
+    {{ media | model_viewer_tag }}
+  {% else %}
+    {{ media | media_tag }}
 {% endcase %}

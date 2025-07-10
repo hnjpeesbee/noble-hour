@@ -1,51 +1,49 @@
 {% assign product_count = section.settings.number_of_products_to_show %}
 
 <div class="relative items-center my-12">
-    <h1 class="text-center text-4xl font-bold my-10">{{ section.settings.title }}</h1>
+  <h1 class="text-center text-4xl font-bold my-10">{{ section.settings.title }}</h1>
 
-    <div class="max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {% for product in section.settings.product_showcase.products limit: product_count %}
-                {% render 'product-card', product_item: product %}
-            {% else %}
-                {% for item in (1..product_count) %}
-                    {% render 'product-card-placeholder' %}
-                {% endfor %}    
-            {% endfor %}
-        </div>
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {% for product in section.settings.product_showcase.products limit: product_count %}
+        {% render 'product-card', product_item: product %}
+      {% else %}
+        {% for item in (1..product_count) %}
+          {% render 'product-card-placeholder' %}
+        {% endfor %}
+      {% endfor %}
     </div>
+  </div>
 </div>
 
-
-
 {% schema %}
+{
+  "name": "Product Showcase",
+  "settings": [
     {
-        "name": "Product Showcase",
-        "settings": [
-            {
-                "type": "text",
-                "id": "title",
-                "default": "Product Showcase",
-                "label": "Title"
-            },
-            {
-                "type": "collection",
-                "id": "product_showcase",
-                "label": "Collection"
-            },
-            {
-                "type": "range",
-                "id": "number_of_products_to_show",
-                "min": 3,
-                "max": 12,
-                "default": 6,
-                "label": "Number of products to show"
-            }
-        ],
-        "presets": [
-            {
-                "name": "Product Showcase"
-            }
-        ]
+      "type": "text",
+      "id": "title",
+      "default": "Product Showcase",
+      "label": "Title"
+    },
+    {
+      "type": "collection",
+      "id": "product_showcase",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "number_of_products_to_show",
+      "min": 3,
+      "max": 12,
+      "default": 6,
+      "label": "Number of products to show"
     }
+  ],
+  "presets": [
+    {
+      "name": "Product Showcase"
+    }
+  ]
+}
 {% endschema %}

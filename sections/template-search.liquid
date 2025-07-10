@@ -1,44 +1,46 @@
 <div class="container mx-auto">
-    {% paginate search.results by 12 %}
-        <h1 class="text-xl my-4 text-center">Search Results</h1>
-        <div class="flex justify-center items-center">
-            <form action="{{ routes.search_url }}" method="get" class="flex rounded border">
-                <div class="relative flex text-gray-500 px-10">
-                    <input 
-                        type="search" 
-                        name="q" 
-                        placeholder="Search" 
-                        value="{{ search.terms | escape }}" 
-                        class="w-auto md:w-80 px-4 py-2 border-none focus:outline-none"
-                    >
-                    <button type="submit" class="bg-gray-900 hover:bg-gray-700 text-white border rounded-full px-4">
-                        Search
-                    </button>
-                </div>
-            </form>
+  {% paginate search.results by 12 %}
+    <h1 class="text-xl my-4 text-center">Search Results</h1>
+    <div class="flex justify-center items-center">
+      <form action="{{ routes.search_url }}" method="get" class="flex rounded border">
+        <div class="relative flex text-gray-500 px-10">
+          <input
+            type="search"
+            name="q"
+            placeholder="Search"
+            value="{{ search.terms | escape }}"
+            class="w-auto md:w-80 px-4 py-2 border-none focus:outline-none"
+          >
+          <button type="submit" class="bg-gray-900 hover:bg-gray-700 text-white border rounded-full px-4">
+            Search
+          </button>
         </div>
-        {% if search.performed %}
-            {% if search.results.size > 0 %}
-                <div class="max-w-6xl mx-auto">
-                    <p class="text-gray-700 text-center my-10">{{ search.results.size }} result for the search term <b>{{ search.terms | escape }}</b></p>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4">
-                        {% for item in search.results %}
-                            {% case item.object_type %}
-                                {% when 'product' %}
-                                    {% render 'product-card', product_item: item %}
-                                {% else %}
-                                    
-                            {% endcase %}
-                        {% endfor %}
-                    </div>
-                </div>
-            {% else %}
-                <div class="text-center-my-4">
-                    <p>No results for the search term: {{ search.terms | escape }}. Try to use a different keyword</p>    
-                </div>    
-            {% endif %}
-        {% endif %}
-        
-        {% render 'pagination', pagination: paginate %}
-    {% endpaginate %}
+      </form>
+    </div>
+    {% if search.performed %}
+      {% if search.results.size > 0 %}
+        <div class="max-w-6xl mx-auto">
+          <p class="text-gray-700 text-center my-10">
+            {{ search.results.size }} result for the search term <b>{{ search.terms | escape }}</b>
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4">
+            {% for item in search.results %}
+              {% case item.object_type %}
+                {% when 'product' %}
+                  {% render 'product-card', product_item: item %}
+                {% else %}
+
+              {% endcase %}
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <div class="text-center-my-4">
+          <p>No results for the search term: {{ search.terms | escape }}. Try to use a different keyword</p>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% render 'pagination', pagination: paginate %}
+  {% endpaginate %}
 </div>

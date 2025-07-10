@@ -1,11 +1,11 @@
 {
-    "name": "Template 404", //name of the template in the admin shopify
-    "sections": {
-        "template": { //identifier for the section
-            "type": "template-404", //liquid file under templates directory
-        },
+  "name": "Template 404", //name of the template in the admin shopify
+  "sections": {
+    "template": { //identifier for the section
+      "type": "template-404", //liquid file under templates directory
     },
-    "order": [
-        "template"
-    ] //order of the sections when multiple sections are present
+  },
+  "order": [
+    "template"
+  ] //order of the sections when multiple sections are present
 }

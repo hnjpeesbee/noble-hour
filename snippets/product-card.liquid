@@ -1,70 +1,73 @@
-<div 
-    x-data="{ hovered: false }"
-    @mouseenter="hovered = true"
-    @mouseleave="hovered = false"
-    class="w-full py-6 px-3 z-0"
+<div
+  x-data="{ hovered: false }"
+  @mouseenter="hovered = true"
+  @mouseleave="hovered = false"
+  class="w-full py-6 px-3 z-0"
 >
-    <div class="bg-white shadow-lg rounded-lg relative">
-        <a href="{{ product_item.url }}" class="block relative h-96">
-            {% assign second_image = product_item.media[1] %}
+  <div class="bg-white shadow-lg rounded-lg relative">
+    <a href="{{ product_item.url }}" class="block relative h-96">
+      {% assign second_image = product_item.media[1] %}
 
-            <!-- Primary image -->
-            {% if product_item.featured_image %}
-                <img
-                    src="{{ product_item.featured_image | image_url: width: 512 }}"
-                    alt="{{ product_item.featured_image.alt | escape }}"
-                    width="512"
-                    height="512"
-                    class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
-                    :class="{ 'opacity-100': !hovered, 'opacity-0': hovered }"
-                >
-            {% endif %}
+      <!-- Primary image -->
+      {% if product_item.featured_image %}
+        <img
+          src="{{ product_item.featured_image | image_url: width: 512 }}"
+          alt="{{ product_item.featured_image.alt | escape }}"
+          width="512"
+          height="512"
+          class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
+          :class="{ 'opacity-100': !hovered, 'opacity-0': hovered }"
+        >
+      {% endif %}
 
-            <!-- Secondary image -->
-            {% if second_image %}
-                <img
-                    src="{{ second_image | image_url: width: 512 }}"
-                    alt="{{ second_image.alt | escape }}"
-                    width="512"
-                    height="512"
-                    class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
-                    :class="{ 'opacity-100': hovered, 'opacity-0': !hovered }"
-                >
-            {% endif %}
-        </a>
+      <!-- Secondary image -->
+      {% if second_image %}
+        <img
+          src="{{ second_image | image_url: width: 512 }}"
+          alt="{{ second_image.alt | escape }}"
+          width="512"
+          height="512"
+          class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
+          :class="{ 'opacity-100': hovered, 'opacity-0': !hovered }"
+        >
+      {% endif %}
+    </a>
 
-        <!-- Action buttons -->
-        {% comment %} 
-            <div
-            class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 transition-all duration-500 z-10"
-            :class="{ 'opacity-100 visible': hovered, 'opacity-0 invisible': !hovered }"
-            >
-            <a href="{{ product_item.url }}" class="bg-white text-black text-xs px-3 py-1 shadow rounded hover:bg-gray-100">
-                Quick View
-            </a>
-            <form method="post" action="{{ routes.cart_url }}">
-                <input type="hidden" name="id" value="{{ product_item.variants.first.id }}">
-                <button type="submit" class="bg-black text-white text-xs px-3 py-1 shadow rounded hover:bg-gray-800">
-                Add to Cart
-                </button>
-            </form>
-            </div> 
-        {% endcomment %}
+    <!-- Action buttons -->
+    {% comment %}
+      <div
+      class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 transition-all duration-500 z-10"
+      :class="{ 'opacity-100 visible': hovered, 'opacity-0 invisible': !hovered }"
+      >
+      <a href="{{ product_item.url }}" class="bg-white text-black text-xs px-3 py-1 shadow rounded hover:bg-gray-100">
+          Quick View
+      </a>
+      <form method="post" action="{{ routes.cart_url }}">
+          <input type="hidden" name="id" value="{{ product_item.variants.first.id }}">
+          <button type="submit" class="bg-black text-white text-xs px-3 py-1 shadow rounded hover:bg-gray-800">
+          Add to Cart
+          </button>
+      </form>
+      </div>
+    {% endcomment %}
 
-        <!-- Product info -->
-        <div class="flex flex-col p-4 bg-white relative">
-            <span class="text-gray-400 text-[12px]">{{ product_item.vendor }}</span>
-            <a href="{{ product_item.url }}" class="text-gray-700 text-base uppercase font-medium">
-                {{ product_item.title | truncate: 20}}
-            </a>
-            <div class="flex flex-row my-1">
-                <p class="text-gray-800 text-sm pr-2">{{ product_item.price_min | money }} {% if product_item.price_min < product_item.price_max%}- {{ product_item.price_max | money }} {% endif %}</p>
-                {% if product_item.compare_at_price > product_item.price %}
-                    <p class="text-red-700 text-xs my-auto line-through">
-                        {{ product_item.compare_at_price | money }}
-                    </p>
-                {% endif %}
-            </div>
-        </div>
+    <!-- Product info -->
+    <div class="flex flex-col p-4 bg-white relative">
+      <span class="text-gray-400 text-[12px]">{{ product_item.vendor }}</span>
+      <a href="{{ product_item.url }}" class="text-gray-700 text-base uppercase font-medium">
+        {{ product_item.title | truncate: 20 }}
+      </a>
+      <div class="flex flex-row my-1">
+        <p class="text-gray-800 text-sm pr-2">
+          {{ product_item.price_min | money }}
+          {% if product_item.price_min < product_item.price_max %}- {{ product_item.price_max | money }} {% endif %}
+        </p>
+        {% if product_item.compare_at_price > product_item.price %}
+          <p class="text-red-700 text-xs my-auto line-through">
+            {{ product_item.compare_at_price | money }}
+          </p>
+        {% endif %}
+      </div>
     </div>
+  </div>
 </div>

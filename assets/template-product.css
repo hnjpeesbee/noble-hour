@@ -1,21 +1,24 @@
 .swiper-button-prev,
 .swiper-button-next {
-    color: black;
-    top: auto !important;
-    height: 20px;
+  color: black;
+  top: auto !important;
+  height: 20px;
 }
 
 .swiper-button-prev::after,
 .swiper-button-next::after {
-    font-size: 20px;
+  font-size: 20px;
 }
+
 .swiper-pagination {
-    color: black;
-    bottom: 0 !important;
+  color: black;
+  bottom: 0 !important;
 }
+
 .swiper-pagination-bullet-active {
-    background-color: black !important;
+  background-color: black !important;
 }
+
 .product--information {
-    height: fit-content;
+  height: fit-content;
 }

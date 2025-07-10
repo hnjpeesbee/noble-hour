@@ -1,35 +1,35 @@
 <footer class="pt-4 bg-gray-100 ">
-    <div class="flex items-center justify-between">
-        {% render 'logo' %}
-        <div class="flex gap-x-4 md:gap-x-8 text-gray-800 text-xs md:text-base font-medium">
-            {% for link in section.settings.menu.links %}
-                {{ link.title | link_to: link.url }}
-            {% endfor %}
-        </div>
-        <div class="flex align-middle gap-x-2 md:gap-x-4 pr-5">
-            {% render 'icon-fb' %}
-            {% render 'icon-ig' %}
-        </div>
+  <div class="flex items-center justify-between">
+    {% render 'logo' %}
+    <div class="flex gap-x-4 md:gap-x-8 text-gray-800 text-xs md:text-base font-medium">
+      {% for link in section.settings.menu.links %}
+        {{ link.title | link_to: link.url }}
+      {% endfor %}
     </div>
+    <div class="flex align-middle gap-x-2 md:gap-x-4 pr-5">
+      {% render 'icon-fb' %}
+      {% render 'icon-ig' %}
+    </div>
+  </div>
 
-    <div class="text-gray-700 text-left ml-2 pt-6 pb-2">
-        &copy;
-        {{ 'now' | date: '%Y' }}
-        {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-    </div>
+  <div class="text-gray-700 text-left ml-2 pt-6 pb-2">
+    &copy;
+    {{ 'now' | date: '%Y' }}
+    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+  </div>
 </footer>
 
 {% schema %}
 {
   "name": "Footer",
   "settings": [
-        {
-            "type": "link_list",
-            "id": "menu",
-            "default": "footer",
-            "label": "Footer Menu",
-            "info": "Select a menu to be displayed in the footer."
-        }
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "footer",
+      "label": "Footer Menu",
+      "info": "Select a menu to be displayed in the footer."
+    }
   ]
 }
 {% endschema %}
