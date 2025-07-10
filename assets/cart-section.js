@@ -59,7 +59,7 @@ class CartSection extends HTMLElement {
 
     const currentTableBody = this.querySelector('#cart-table-body');
     const currentSubtotal = this.querySelector('#cart-subtotal');
-
+    console.log('Updating cart section:', currentTableBody, newTableBody);
     if (newTableBody && currentTableBody) {
       currentTableBody.innerHTML = newTableBody.innerHTML;
     }
