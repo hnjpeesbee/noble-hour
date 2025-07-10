@@ -1,6 +1,8 @@
+{% comment %} THIS IS FOR A MULTIMEDIA TYPES FOR PRODUCT PAGE {% endcomment %}
 {% case media.media_type %}
   {% when 'image' %}
     <img
+      id="product-page-media"
       src="{{ media | image_url: width:720 }}"
       width="1024"
       height="720"
