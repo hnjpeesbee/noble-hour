@@ -76,7 +76,11 @@ class CartNotification extends HTMLElement {
             this.modal.classList.remove('hidden');
             this.modal.classList.add('flex');
 
-            // Update cart bubble
+            setTimeout(() => {
+                this.modal.classList.add('hidden');
+            }, 5000);
+
+            // REPLACE THIS WITH THE CART BUBBLE COMPONENT
             const headerHTML = data['header'];
             const headerDOM = new DOMParser().parseFromString(headerHTML, 'text/html');
             const newBubble = headerDOM.querySelector('[data-cart-bubble]');
@@ -86,10 +90,6 @@ class CartNotification extends HTMLElement {
                 currentBubble.classList.add('animate-bounce');
                 currentBubble.innerHTML = newBubble.innerHTML;
             }
-
-            setTimeout(() => {
-                this.modal.classList.add('hidden');
-            }, 5000);
         });
     }
 }
