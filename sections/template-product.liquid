@@ -109,14 +109,30 @@
                                 </label>
 
                                 <div class="my-2">
-                                    <input 
-                                        type="number" 
-                                        name="quantity" 
-                                        id="Quantity-{{ section.id }}" 
-                                        value="1" 
-                                        min="1"
-                                        class="w-1/4 border px-3 py-3"
-                                    >
+                                    <div class="flex items-center border rounded overflow-hidden w-fit">
+                                        <button
+                                            type="button"
+                                            class="px-3 py-2 text-gray-600 hover:bg-gray-100"
+                                            onclick="this.nextElementSibling.stepDown(); this.nextElementSibling.dispatchEvent(new Event('change'))"
+                                        >
+                                            {% render 'icon-subtract' %}</button>
+
+                                        <input 
+                                            type="number" 
+                                            name="quantity" 
+                                            id="Quantity-{{ section.id }}" 
+                                            value="1" 
+                                            min="1"
+                                            class="w-12 text-center border-x border-gray-200 focus:outline-none"
+                                        >
+
+                                        <button
+                                            type="button"
+                                            class="px-3 py-2 text-gray-600 hover:bg-gray-100"
+                                            onclick="this.previousElementSibling.stepUp(); this.previousElementSibling.dispatchEvent(new Event('change'))"
+                                        >
+                                            {% render 'icon-add' %}</button>
+                                    </div>
                                 </div>
                             </div>
                         {% when "description" %}
