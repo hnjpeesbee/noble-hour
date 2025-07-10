@@ -3,15 +3,11 @@
         "template": {
             "type": "template-cart",
             "blocks": {
-                "subtotal": {
-                    "type": "subtotal"
-                },
                 "checkout-button": {
                     "type": "checkout_button",
                 }
             },
             "block_order": [
-                "subtotal",
                 "checkout-button"
             ]
         }
