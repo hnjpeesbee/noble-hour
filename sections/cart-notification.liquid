@@ -3,6 +3,7 @@
         data-cart-item
         data-key="{{ item.key }}"
         data-title="{{ item.product.title | escape_once }}"
+        data-variant-id="{{ item.variant.id }}"
         data-quantity="{{ item.quantity }}"
         data-price="{{ item.final_line_price | money }}"
         data-variant="{{ item.variant.title | escape_once }}"
@@ -23,7 +24,7 @@
 
         <div class="mt-8 flex flex-col gap-3">
             <a href="{{ routes.cart_url }}" class="bg-gray-100 text-center text-base py-3 rounded hover:bg-gray-200">View Cart</a>
-            <a href="/checkout" class="bg-black text-white text-center text-base py-3 rounded hover:bg-gray-800">Checkout</a>
+            <a href="#" id="checkout-button" class="bg-black text-white text-center text-base py-3 rounded hover:bg-gray-800">Checkout</a>
         </div>
     </div>
 </div>
