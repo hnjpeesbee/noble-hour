@@ -1,24 +1,29 @@
-class productForm extends HTMLElement {
+class ProductForm extends HTMLElement {
   constructor() {
     super();
-    this.form = this.querySelector('form');
-    this.addEventListener('submit', this.handleSubmit.bind(this));
   }
 
-  async handleSubmit(event) {
-    event.preventDefault();
-    const formData = new FormData(this.form);
-    const response = await fetch('/cart/add.js', {
-      method: 'POST',
-      body: formData,
-    });
+  selectVariantImage(mediaId) {
+    const pageMedia = this.querySelector('#product-page-media');
 
-    if (!response.ok) {
-      const error = await response.json();
-      console.error('❌ Add to cart failed:', error);
+    if (!pageMedia) {
+      console.error('Product image element not found');
       return;
     }
 
-    // Optionally, you can update the cart UI here
+    // Hide all media
+    const allMedia = pageMedia.querySelectorAll('.product-media');
+    allMedia.forEach(el => el.classList.add('hidden'));
+
+    // Show the one that matches
+    const activeMedia = pageMedia.querySelector(`[data-media-id="${mediaId}"]`);
+    
+    if (activeMedia) {
+      activeMedia.classList.remove('hidden');
+    } else {
+      console.warn(`No media found with ID: ${mediaId}`);
+    }
   }
 }
+
+customElements.define('product-form', ProductForm);

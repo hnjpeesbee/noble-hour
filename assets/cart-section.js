@@ -46,7 +46,9 @@ class CartSection extends HTMLElement {
       method: 'POST',
       body: formData,
     });
-
+    // const url = `${this.dataset.url}?section_id=${this.dataset.section}`; //test for dynamic section implementation
+    // console.log('Updating cart with URL:', url); //test for dynamic section implementation
+    // const sections = await fetch(url); //test for dynamic section implementation
     const sections = await fetch('/?sections=template-cart,header');
     const html = await sections.json();
 

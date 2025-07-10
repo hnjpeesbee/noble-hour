@@ -7,6 +7,9 @@ class VariantSelector extends HTMLElement {
   connectedCallback() {
     this.addEventListener("change", this.onVariantChange);
     this.getVariantJSON(); // preload variant JSON
+    this.getSelectedOptions(); // ✅ populate this.options initially
+    this.getSelectedVariant(); // ✅ select the initial variant
+    this.productImage = document.querySelector('product-form'); //call the product-form web component
   }
 
   onVariantChange() {
@@ -15,6 +18,7 @@ class VariantSelector extends HTMLElement {
 
     if (this.currentVariant) {
       this.updateURL();
+      this.updateImageDisplay(); // update the product image based on the selected variant on every change event
       this.updateFormID();
       this.updatePrice();
     } else {
@@ -71,6 +75,15 @@ class VariantSelector extends HTMLElement {
     if (idInput) {
       idInput.value = this.currentVariant.id;
     }
+  }
+
+  updateImageDisplay() {
+    if (!this.productImage) {
+      console.error('Product image component not found');
+      return;
+    }
+
+    this.productImage.selectVariantImage(this.currentVariant.featured_media.id); //then call the selectVariantImage method under the component to do the image change.
   }
 
   updatePrice() {
