@@ -5,6 +5,7 @@ class CartNotification extends HTMLElement {
 
     connectedCallback() {
         this.modal = this.querySelector('#cart-modal');
+        this.checkoutButton = this.modal.querySelector('#checkout-button');
         this.closeBtn = this.querySelector('#cart-modal-close');
         this.itemsContainer = this.querySelector('#cart-modal-items');
 
@@ -62,6 +63,12 @@ class CartNotification extends HTMLElement {
                             </div>
                         `;
                         this.itemsContainer.insertAdjacentHTML('beforeend', itemHTML);
+                        
+                        const variantId = el.dataset.variantId;
+                        const quantity = el.dataset.quantity;
+                        if (this.checkoutButton && variantId && quantity) {
+                            this.checkoutButton.href = `/cart/${variantId}:${quantity}`;
+                        }
                     }
                 });
             }

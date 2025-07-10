@@ -12,110 +12,9 @@
             </div>
         </div>
     </div>
-
-    <div class="max-w-6xl flex flex-col my-10 mx-auto" id="cart-section">
-        <form action="{{ routes.cart_url }}" method="POST" novalidate>
-            <table class="table-auto divide-y divide-gray-200 my-4 w-full">
-                <thead>
-                    <th></th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Product</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Quantity</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Total Price</th>
-                </thead>
-                <tbody>
-                {% for item in cart.items %}
-                    <tr class="table-row">
-                        <td class="py-4 px-2 align-middle">
-                            <div class="flex items-center justify-center h-full">
-                                <a
-                                    href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0"
-                                    class="text-sm font-medium text-red-500"
-                                >
-                                    {% render 'icon-trash-bin' %}
-                                </a>
-                            </div>
-                        </td>
-                        <td class="py-4 px-2">
-                            <div class="flex gap-4 items-start">
-                                <a href="{{ item.url }}">
-                                    {% if item.image %}
-                                        <img
-                                            src="{{ item.image | image_url: width: 80 }}"
-                                            width="80"
-                                            height="80"
-                                            class="w-20 h-20 object-cover border"
-                                            alt="{{ item.title | escape }}"
-                                        >
-                                    {% else %}
-                                        {{ 'collection-5' | placeholder_svg_tag: 'w-20 h-20 object-cover border' }}
-                                    {% endif %}
-                                </a>
-                                <div>
-                                    <a href="{{ item.url }}" class="block text-sm font-medium mb-1">
-                                        {{ item.product.title | truncatewords: 5 }}
-                                    </a>
-                                    <span class="text-sm text-gray-500 block mb-1">{{ item.variant.title }}</span>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td class="py-4 px-2">
-                            <input
-                                type="number"
-                                name="updates[]"
-                                value="{{ item.quantity }}"
-                                min="1"
-                                id="updates-{{ forloop.index }}"
-                                class="w-20 border p-2"
-                            >
-                        </td>
-
-                        <td class="py-4 px-2">
-                            {{ item.line_price | money }}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            <div class="flex flex-col md:flex-row items-center justify-between">
-                <div class="w-full my-4">
-                    <div class="flex flex-col items-start">
-                        <label for="cart_notes" class="my-1"> Cart notes </label>
-                        <textarea name="note" id="cart_notes" class="w-full md:max-w-lg resize-none border h-20"></textarea>
-                    </div>
-                </div>
-                <div class="w-full my-4 md:w-80">
-                    {% for block in section.blocks %}
-                        {% case block.type %}
-                            {% when 'subtotal' %}
-                                <h3 class="text-xl">Subtotal: {{ cart.total_price | money }}</h3>
-                            {% when 'update_button' %}
-                                <div class="my-2">
-                                    <button
-                                        type="submit"
-                                        name="update"
-                                        class="w-full p-3 border border-gray-600 text-gray-600 font-medium hover:bg-gray-600 hover:text-white"
-                                    >
-                                        Update
-                                    </button>
-                                </div>
-                            {% when 'checkout_button' %}
-                                <div class="my-2">
-                                    <button
-                                        type="submit"
-                                        name="checkout"
-                                        class="w-full p-3 border border-green-600 font-medium bg-green-600 text-white"
-                                    >
-                                        Checkout
-                                    </button>
-                                </div>
-                            {% else %}
-                        {% endcase %}
-                    {% endfor %}
-                </div>
-            </div>
-        </form>
-    </div>
+    <cart-section>
+        {% render 'cart-section' %}
+    </cart-section>
 {% else %}
     <div class="max-w-6xl h-60 my-4 mx-auto flex items-center justify-center">
         <div class="text-center">
@@ -139,11 +38,6 @@
         {
             "type": "subtotal",
             "name": "Subtotal",
-            "limit": 1
-        },
-        {
-            "type": "update_button",
-            "name": "Update Button",
             "limit": 1
         },
         {
