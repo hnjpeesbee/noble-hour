@@ -1,0 +1,104 @@
+<aside
+    x-show="filterSlide"
+    @click.away="filterSlide = false"
+    @keydown.escape.window="filterSlide = false"
+    x-transition:enter="transition transform duration-300 ease-out"
+    x-transition:enter-start="-translate-x-full"
+    x-transition:enter-end="translate-x-0"
+    x-transition:leave="transition transform duration-300 ease-in"
+    x-transition:leave-start="translate-x-0"
+    x-transition:leave-end="-translate-x-full"
+    x-cloak
+    class="fixed top-0 left-0 w-64 h-screen bg-white shadow z-[110]"
+  >
+    <div class="sticky top-0 p-6 overflow-y-auto h-screen">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-lg font-semibold">Filter Products</h2>
+        <button
+          type="button"
+          class="text-sm text-white hover:underline bg-gray-900 py-1 px-4 rounded-lg"
+          onclick="clearSwatchFilters()"
+        >
+          Clear
+        </button>
+      </div>
+
+      {% assign option_values = '' %}
+      {% assign vendors = '' %}
+      {% assign option_name = '' %}
+
+      {% for product in collection.products %}
+        {% assign vendors = vendors | append: product.vendor | append: ',' %}
+
+        {% for option in product.options_with_values %}
+          {% case forloop.index %}
+            {% when 2 %}
+              {% assign option_name = option.name %}
+              {% for value in option.values %}
+                {% unless option_values contains value %}
+                  {% assign option_values = option_values | append: value | append: ',' %}
+                {% endunless %}
+              {% endfor %}
+          {% endcase %}
+        {% endfor %}
+      {% endfor %}
+
+      {% assign option_array = option_values | split: ',' | uniq %}
+      {% assign vendor_array = vendors | split: ',' | uniq %}
+
+      {% if option_name != '' %}
+        <div class="mb-6">
+          <h3 class="text-sm font-medium text-gray-700 mb-2">{{ option_name }}</h3>
+          <div class="flex flex-wrap gap-2">
+            {% for value in option_array %}
+              {% if value != '' %}
+                <label class="relative cursor-pointer">
+                  <input
+                    type="radio"
+                    name="filter_{{ option_name | downcase }}"
+                    value="{{ value }}"
+                    class="sr-only peer"
+                    data-filter-name="{{ option_name | downcase }}"
+                    data-filter-value="{{ value }}"
+                  >
+                  <span class="px-3 py-1 border rounded text-sm peer-checked:bg-gray-900 peer-checked:text-white">
+                    {{ value }}
+                  </span>
+                </label>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="mb-6">
+        <h3 class="text-sm font-medium text-gray-700 mb-2">Vendor</h3>
+        <div class="flex flex-wrap gap-2">
+          {% for vendor in vendor_array %}
+            {% if vendor != '' %}
+              <label class="relative cursor-pointer">
+                <input
+                  type="radio"
+                  name="filter_vendor"
+                  value="{{ vendor }}"
+                  class="sr-only peer"
+                  data-filter-name="vendor"
+                  data-filter-value="{{ vendor }}"
+                >
+                <span class="px-3 py-1 border rounded text-sm peer-checked:bg-gray-900 peer-checked:text-white">
+                  {{ vendor }}
+                </span>
+              </label>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </aside>
+
+<script>
+  function clearSwatchFilters() {
+    const swatches = document.querySelectorAll('input[type="radio"][name^="filter_"]');
+    swatches.forEach((input) => (input.checked = false));
+  }
+</script>
