@@ -43,32 +43,35 @@ class CartSection extends HTMLElement {
     const formData = new FormData();
     formData.append(`updates[${itemKey}]`, quantity);
 
-    const response = await fetch('/cart/update.js', {
+    await fetch('/cart/update.js', {
       method: 'POST',
       body: formData,
     });
 
-    const sectionsRes = await fetch('/?sections=template-cart');
-    const html = await sectionsRes.json();
+    const currentCartSection = document.querySelector('cart-section');
 
-    const newCartDOM = new DOMParser().parseFromString(html['template-cart'], 'text/html');
+    const response = await fetch('/?sections=template-cart');
+    const data = await response.json();
+
+    const newCartDOM = new DOMParser().parseFromString(data['template-cart'], 'text/html');
     const newCartSection = newCartDOM.querySelector('cart-section');
     const emptyCartFallback = newCartDOM.querySelector('[data-cart-empty]');
 
-    const currentCartSection = document.querySelector('cart-section');
-
     if (newCartSection) {
       currentCartSection.replaceWith(newCartSection);
+
+      // Re-upgrade to attach JS behavior again after replaceWith
+      customElements.upgrade(newCartSection);
     } else if (emptyCartFallback) {
       currentCartSection.replaceWith(emptyCartFallback);
     } else {
       console.warn('⚠️ Could not find cart-section or empty fallback in new HTML.');
     }
 
-    this.cartBubble.updateCartCount();
-
-    customElements.upgrade(document.querySelector('cart-section'));
+    // Update cart bubble after rendering
+    this.cartBubble?.updateCartCount();
   }
+
 
 
 }
