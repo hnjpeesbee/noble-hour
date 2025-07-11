@@ -1,19 +1,19 @@
 {% if cart.item_count > 0 %}
-  <div class="p-4">
-    <div class="max-w-6xl flex flex-col my-10 mx-auto">
-      <div class="flex items-end justify-between my-5">
-        <h1 class="text-3xl">Your Cart</h1>
-        <a
-          href="{{ routes.all_products_collection_url }}"
-          class="text-blue-600 hover:text-blue-800 font-medium underline"
-        >
-          Continue Shopping
-        </a>
+  <cart-section>
+    <div class="p-4">
+      <div class="max-w-6xl flex flex-col my-10 mx-auto">
+        <div class="flex items-end justify-between my-5">
+          <h1 class="text-3xl">Your Cart</h1>
+          <a
+            href="{{ routes.all_products_collection_url }}"
+            class="text-blue-600 hover:text-blue-800 font-medium underline"
+          >
+            Continue Shopping
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-  <cart-section data-url="{{ routes.cart_url }}" data-section="{{ section.id }}">
-    <div id="cart-section" class="max-w-6xl flex flex-col my-10 mx-auto">
+    <div class="max-w-6xl flex flex-col my-10 mx-auto">
       <form action="{{ routes.cart_url }}" method="POST" novalidate>
         <table class="table-auto divide-y divide-gray-200 my-4 mx-4 w-full">
           <thead>
@@ -38,7 +38,10 @@
                 </td>
                 <td class="py-4 px-2">
                   <div class="flex gap-4 items-start">
-                    <a href="{{ item.url }}">
+                    <a
+                      href="#"
+                      class="pointer-none:"
+                    >
                       {% if item.image %}
                         <img
                           src="{{ item.image | image_url: width: 80 }}"
@@ -52,7 +55,7 @@
                       {% endif %}
                     </a>
                     <div>
-                      <a href="{{ item.url }}" class="block text-sm font-medium mb-1">
+                      <a href="#" class="block text-sm font-medium mb-1 pointer-none:">
                         {{ item.product.title | truncatewords: 5 }}
                       </a>
                       <span class="text-sm text-gray-500 block mb-1">{{ item.variant.title }}</span>
@@ -109,30 +112,22 @@
           </div>
           <div class="w-full my-4 md:w-80">
             <h3 class="text-xl" id="cart-subtotal">Subtotal: {{ cart.total_price | money }}</h3>
-
-            {% for block in section.blocks %}
-              {% case block.type %}
-                {% when 'checkout_button' %}
-                  <div class="my-2">
-                    <button
-                      type="submit"
-                      name="checkout"
-                      class="w-full p-3 border border-green-600 font-medium bg-green-600 text-white"
-                    >
-                      Checkout
-                    </button>
-                  </div>
-                {% else %}
-
-              {% endcase %}
-            {% endfor %}
+            <div class="my-2">
+              <button
+                type="submit"
+                name="checkout"
+                class="w-full p-3 border border-green-600 font-medium bg-green-600 text-white"
+              >
+                Checkout
+              </button>
+            </div>
           </div>
         </div>
       </form>
     </div>
   </cart-section>
 {% else %}
-  <div class="max-w-6xl h-60 my-4 mx-auto flex items-center justify-center">
+  <div data-cart-empty class="max-w-6xl h-60 my-4 mx-auto flex items-center justify-center">
     <div class="text-center">
       <h1 class="text-3xl my-4">Your Cart is empty</h1>
       <div class="my-4 py-4">
