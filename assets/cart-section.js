@@ -5,6 +5,7 @@ class CartSection extends HTMLElement {
 
   connectedCallback() {
     this.delegateEvents();
+    this.cartBubble = document.querySelector('cart-bubble');
   }
 
   delegateEvents() {
@@ -46,40 +47,29 @@ class CartSection extends HTMLElement {
       method: 'POST',
       body: formData,
     });
-    // const url = `${this.dataset.url}?section_id=${this.dataset.section}`; //test for dynamic section implementation
-    // console.log('Updating cart with URL:', url); //test for dynamic section implementation
-    // const sections = await fetch(url); //test for dynamic section implementation
-    const sections = await fetch('/?sections=template-cart,header');
-    const html = await sections.json();
 
-    const newCartSection = new DOMParser().parseFromString(html['template-cart'], 'text/html');
+    const sectionsRes = await fetch('/?sections=template-cart');
+    const html = await sectionsRes.json();
 
-    const newTableBody = newCartSection.querySelector('#cart-table-body');
-    const newSubtotal = newCartSection.querySelector('#cart-subtotal');
+    const newCartDOM = new DOMParser().parseFromString(html['template-cart'], 'text/html');
+    const newCartSection = newCartDOM.querySelector('cart-section');
+    const emptyCartFallback = newCartDOM.querySelector('[data-cart-empty]');
 
-    const currentTableBody = this.querySelector('#cart-table-body');
-    const currentSubtotal = this.querySelector('#cart-subtotal');
-    console.log('Updating cart section:', currentTableBody, newTableBody);
-    if (newTableBody && currentTableBody) {
-      currentTableBody.innerHTML = newTableBody.innerHTML;
+    const currentCartSection = document.querySelector('cart-section');
+
+    if (newCartSection) {
+      currentCartSection.replaceWith(newCartSection);
+    } else if (emptyCartFallback) {
+      currentCartSection.replaceWith(emptyCartFallback);
+    } else {
+      console.warn('⚠️ Could not find cart-section or empty fallback in new HTML.');
     }
 
-    if (newSubtotal && currentSubtotal) {
-      currentSubtotal.innerHTML = newSubtotal.innerHTML;
-    }
+    this.cartBubble.updateCartCount();
 
-    // REPLACE THIS WITH THE CART BUBBLE COMPONENT
-    const newHeader = new DOMParser()
-      .parseFromString(html['header'], 'text/html');
-
-    const newBubble = newHeader.querySelector('[data-cart-bubble]');
-    const currentBubble = document.querySelector('[data-cart-bubble]');
-
-    if (newBubble && currentBubble) {
-      currentBubble.innerHTML = newBubble.innerHTML;
-      currentBubble.className = newBubble.className;
-    }
+    customElements.upgrade(document.querySelector('cart-section'));
   }
+
 
 }
 

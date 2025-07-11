@@ -32,65 +32,58 @@ class CartNotification extends HTMLElement {
         this.modal.classList.add('hidden');
       });
     }
+
+    this.cartBubble = document.querySelector('cart-bubble');
   }
 
   updateCartBubbleAndModal(key) {
-    fetch('/?sections=cart-notification,header')
-      .then(response => response.json())
-      .then(data => {
-        // Update modal
-        const html = data['cart-notification'];
-        const dom = new DOMParser().parseFromString(html, 'text/html');
-        const rawItems = dom.querySelectorAll('[data-cart-item]');
-        this.itemsContainer.innerHTML = '';
+    fetch('/?sections=cart-notification')
+    .then(response => response.json())
+    .then(data => {
+      // Update modal
+      const html = data['cart-notification'];
+      const dom = new DOMParser().parseFromString(html, 'text/html');
+      const rawItems = dom.querySelectorAll('[data-cart-item]');
+      this.itemsContainer.innerHTML = '';
 
-        if (rawItems.length === 0) {
-          this.itemsContainer.innerHTML = '<p class="text-sm text-gray-500">Your cart is empty.</p>';
-        } else {
-          rawItems.forEach(el => {
-            const itemKey = el.dataset.key;
+      if (rawItems.length === 0) {
+        this.itemsContainer.innerHTML = '<p class="text-sm text-gray-500">Your cart is empty.</p>';
+      } else {
+        rawItems.forEach(el => {
+          const itemKey = el.dataset.key;
 
-            if (itemKey === key) {
-              const itemHTML = `
-                            <div class="flex items-center gap-4 border-b pb-4">
-                                <img src="${el.dataset.image}" alt="${el.dataset.title}" class="w-16 h-16 object-cover rounded border">
-                                <div class="flex-1">
-                                <h3 class="text-sm font-medium">${el.dataset.title}</h3>
-                                <p class="text-sm text-gray-500">${el.dataset.variant}</p>
-                                <p class="text-sm text-gray-500">Qty: ${el.dataset.quantity}</p>
-                                <p class="text-sm font-semibold">${el.dataset.price}</p>
-                                </div>
-                            </div>
-                        `;
-              this.itemsContainer.insertAdjacentHTML('beforeend', itemHTML);
+          if (itemKey === key) {
+            const itemHTML = `
+              <div class="flex items-center gap-4 border-b pb-4">
+                <img src="${el.dataset.image}" alt="${el.dataset.title}" class="w-16 h-16 object-cover rounded border">
+                <div class="flex-1">
+                <h3 class="text-sm font-medium">${el.dataset.title}</h3>
+                <p class="text-sm text-gray-500">${el.dataset.variant}</p>
+                <p class="text-sm text-gray-500">Qty: ${el.dataset.quantity}</p>
+                <p class="text-sm font-semibold">${el.dataset.price}</p>
+                </div>
+              </div>
+            `;
+            this.itemsContainer.insertAdjacentHTML('beforeend', itemHTML);
 
-              const variantId = el.dataset.variantId;
-              const quantity = el.dataset.quantity;
-              if (this.checkoutButton && variantId && quantity) {
-                this.checkoutButton.href = `/cart/${variantId}:${quantity}`;
-              }
+            const variantId = el.dataset.variantId;
+            const quantity = el.dataset.quantity;
+            if (this.checkoutButton && variantId && quantity) {
+              this.checkoutButton.href = `/cart/${variantId}:${quantity}`;
             }
-          });
-        }
+          }
+        });
+      }
 
-        this.modal.classList.remove('hidden');
-        this.modal.classList.add('flex');
+      this.modal.classList.remove('hidden');
+      this.modal.classList.add('flex');
 
-        setTimeout(() => {
-          this.modal.classList.add('hidden');
-        }, 5000);
-
-        // REPLACE THIS WITH THE CART BUBBLE COMPONENT
-        const headerHTML = data['header'];
-        const headerDOM = new DOMParser().parseFromString(headerHTML, 'text/html');
-        const newBubble = headerDOM.querySelector('[data-cart-bubble]');
-        const currentBubble = document.querySelector('[data-cart-bubble]');
-
-        if (newBubble && currentBubble) {
-          currentBubble.classList.add('animate-bounce');
-          currentBubble.innerHTML = newBubble.innerHTML;
-        }
-      });
+      setTimeout(() => {
+        this.modal.classList.add('hidden');
+      }, 5000);
+      
+      this.cartBubble.updateCartCount();
+    });
   }
 }
 
