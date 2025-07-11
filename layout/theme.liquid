@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html class="h-full">
   <head>
     <title>{{ page_title }}</title>
     <meta charset="utf-8">
@@ -13,10 +13,10 @@
 
     <script src="{{ 'alpine-js.min.js' | asset_url }}" defer></script>
   </head>
-  <body>
+  <body class="flex flex-col min-h-screen">
     {% sections 'header-group' %}
 
-    <main role="main">
+    <main role="main" class="flex-1">
       {{ content_for_layout }}
     </main>
 
@@ -26,7 +26,7 @@
 
     {% sections 'footer-group' %}
 
+    <script src="{{ 'cart-bubble.js' | asset_url }}" defer></script>
     <script src="{{ 'cart-notification.js' | asset_url }}" defer></script>
-    <script src="{{ 'cart-section.js' | asset_url }}" defer></script>
   </body>
 </html>
