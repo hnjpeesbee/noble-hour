@@ -56,6 +56,8 @@ class VariantSelector extends HTMLElement {
           this.options[index] === option //this.optios is an array from getSelectedOptions()
       )
     );
+
+    return this.currentVariant; // to be used in product-form component
   }
 
   updateURL() {

@@ -2,6 +2,18 @@ class ProductForm extends HTMLElement {
   constructor() {
     super();
   }
+  connectedCallback() {
+    this.getMediaIdByVariantId();
+    this.selectVariantImage(this.mediaId);
+  }
+
+  getMediaIdByVariantId() {
+    const variantSelector = document.querySelector('variant-selector');
+    variantSelector.getSelectedOptions(); // Ensure options are set
+    const cartItemVariant = variantSelector.getSelectedVariant(); // Ensure options are set
+
+    this.mediaId = cartItemVariant.featured_media?.id || null;
+  }
 
   selectVariantImage(mediaId) {
     const pageMedia = this.querySelector('#product-page-media');
