@@ -9,24 +9,6 @@ class CartNotification extends HTMLElement {
     this.closeBtn = this.querySelector('#cart-modal-close');
     this.itemsContainer = this.querySelector('#cart-modal-items');
 
-    this.productForms = document.querySelectorAll('form[action="/cart/add"]');
-
-    this.productForms.forEach(form => {
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const formData = new FormData(form);
-
-        const response = await fetch('/cart/add.js', {
-          method: 'POST',
-          body: formData
-        });
-
-        const json = await response.json();
-
-        this.updateCartBubbleAndModal(json.key);
-      });
-    });
-
     if (this.closeBtn) {
       this.closeBtn.addEventListener('click', () => {
         this.modal.classList.add('hidden');
@@ -36,7 +18,21 @@ class CartNotification extends HTMLElement {
     this.cartBubble = document.querySelector('cart-bubble');
   }
 
-  updateCartBubbleAndModal(key) {
+  async addToCart() {
+    const form = document.querySelector('#product-form'); 
+    const formData = new FormData(form);
+
+    const response = await fetch('/cart/add.js', {
+      method: 'POST',
+      body: formData
+    });
+
+    const json = await response.json();
+
+    this.updateCartModal(json.key);
+  }
+
+  updateCartModal(key) {
     fetch('/?sections=cart-notification')
     .then(response => response.json())
     .then(data => {

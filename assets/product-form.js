@@ -5,11 +5,21 @@ class ProductForm extends HTMLElement {
   connectedCallback() {
     this.getMediaIdByVariantId();
     this.selectVariantImage(this.mediaId);
+
+    this.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      this.triggerCartNotification();
+    });
+  }
+
+  async triggerCartNotification() {
+    const cartNotification = document.querySelector('cart-notification');
+    await cartNotification.addToCart();
   }
 
   getMediaIdByVariantId() {
     const variantSelector = document.querySelector('variant-selector');
-    variantSelector.getSelectedOptions(); // Ensure options are set
+    variantSelector.getSelectedOptions(); // Ensure options are set, required for getSelectedVariant()
     const cartItemVariant = variantSelector.getSelectedVariant(); // Ensure options are set
 
     this.mediaId = cartItemVariant.featured_media?.id || null;
