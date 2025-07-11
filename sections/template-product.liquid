@@ -2,8 +2,6 @@
 {{ 'template-product.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
 <script src="{{ 'swiper.js' | asset_url }}" defer></script>
-<script src="{{ 'variant-selector.js' | asset_url }}" defer></script>
-<script src="{{ 'product-form.js' | asset_url }}" defer></script>
 
 {% assign selected_variant = product.selected_or_first_available_variant %}
 
