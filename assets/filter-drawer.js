@@ -1,55 +1,79 @@
 class FilterDrawer extends HTMLElement {
   constructor() {
     super();
+    this.debounceTimer = null;
   }
 
   connectedCallback() {
-    document.addEventListener('DOMContentLoaded', () => {
-      const filterForm = document.getElementById('filter-form');
-      if (!filterForm) return;
+    this.form = this.querySelector('#filter-drawer-form');
+    this.detailGroups = this.querySelectorAll('details');
 
-      filterForm.addEventListener('change', handleFilterChange);
-    });
-  }
-
-  getSelectedFilters() {
-    const filters = {};
-    const selectedInputs = document.querySelectorAll('#filter-form input[type="radio"]:checked');
-
-    selectedInputs.forEach((input) => {
-      const name = input.dataset.filterName;
-      const value = input.dataset.filterValue;
-
-      if (name && value) {
-        filters[name] = value;
+    this.addEventListener('change', (event) => {
+      if (event.target.matches('.filter-check')) {
+        this.dispatchFilterChange();
       }
     });
 
-    return filters;
+    this.addEventListener('click', (event) => {
+      if (event.target.matches('.clear-filter')) {
+        this.clearAllFilters();
+      }
+
+        this.dispatchFilterChange();
+    });
+
+    this.form.querySelectorAll('input[type="number"]').forEach(input => {
+      input.addEventListener('input', () => {
+        clearTimeout(this.debounceTimer);
+        this.debounceTimer = setTimeout(() => {
+          this.dispatchFilterChange();
+        }, 400);
+      });
+    });
   }
 
-  async handleFilterChange() {
-    const filters = getSelectedFilters();
-
-    const query = new URLSearchParams();
-    for (const [name, value] of Object.entries(filters)) {
-      query.append(`filter.${name}`, value);
-    }
-
-    // Add pagination params or section ID if needed
-    query.append('section_id', 'your-section-id'); // Replace with actual section ID
-
-    const res = await fetch(`${window.location.pathname}?${query.toString()}`);
-    const html = await res.text();
-
-    const newDoc = new DOMParser().parseFromString(html, 'text/html');
-    const newSection = newDoc.querySelector('#product-list-container');
-
-    const currentSection = document.querySelector('#product-list-container');
-    if (newSection && currentSection) {
-      currentSection.replaceWith(newSection);
-    }
+  dispatchFilterChange() {
+    const formData = new FormData(this.form);
+    
+    this.dispatchEvent(new CustomEvent('filters:changed', {
+      bubbles: true,
+      detail: { formData }
+    }));
+    
+    this.applyFilterBubble();
   }
+
+  clearAllFilters() {
+    this.form.querySelectorAll('input[type="checkbox"]:checked').forEach(input => {
+      input.checked = false;
+      // Remove filter bubble if it exists
+      const bubble = input.querySelector('.filter-bubble');
+      if (bubble) bubble.remove();
+    });
+  }
+
+  applyFilterBubble() {
+
+    this.detailGroups.forEach(detail => {
+      const checkedCount = detail.querySelectorAll('input[type="checkbox"]:checked').length;
+      const bubble = detail.querySelector('.filter-bubble');
+      const labelContainer = detail.querySelector('.filter-label')?.parentElement;
+
+      if (checkedCount > 0) {
+        if (bubble) {
+          bubble.textContent = checkedCount;
+        } else if (labelContainer) {
+          const span = document.createElement('span');
+          span.className = 'filter-bubble text-xs bg-black text-white rounded-full px-2 py-0.5';
+          span.textContent = checkedCount;
+          labelContainer.appendChild(span);
+        }
+      } else if (bubble) {
+        bubble.remove();
+      }
+    });
+  }
+
 }
 
 customElements.define('filter-drawer', FilterDrawer);
