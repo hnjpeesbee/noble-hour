@@ -14,12 +14,30 @@ class FilterDrawer extends HTMLElement {
       }
     });
 
+    // check sort dropdown outside filter drawer
+    const sortSelect = document.querySelector('#sort-by');
+    if (sortSelect) {
+      sortSelect.addEventListener('change', (event) => { 
+        // add input from sort by to the form
+        let hiddenSortInput = this.form.querySelector('input[name="sort_by"]');
+        if (!hiddenSortInput) {
+          hiddenSortInput = document.createElement('input');
+          hiddenSortInput.type = 'hidden';
+          hiddenSortInput.name = 'sort_by';
+          this.form.appendChild(hiddenSortInput);
+        }
+
+        hiddenSortInput.value = event.target.value;
+        this.dispatchFilterChange();
+      });
+    }
+    
+
     this.addEventListener('click', (event) => {
       if (event.target.matches('.clear-filter')) {
         this.clearAllFilters();
-      }
-
         this.dispatchFilterChange();
+      }
     });
 
     this.form.querySelectorAll('input[type="number"]').forEach(input => {

@@ -1,0 +1,18 @@
+<select
+  id="sort-by"
+  name="sort_by"
+  class="w-auto flex justify-between shadow-xl text-black py-2  pr-6 rounded-md cursor-pointer border-1"
+>
+  {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+  {% for option in collection.sort_options %}
+    <option
+      value="{{ option.value }}"
+      {% if option.value == sort_by %}
+        selected="selected"
+      {% endif %}
+    >
+      {{ option.name }}
+    </option>
+  {% endfor %}
+</select>

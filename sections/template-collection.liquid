@@ -8,23 +8,27 @@
         Go to collections
       </a>
     </div>
-
+    <h1 class="text-4xl font-bold text-center">{{ collection.title }}</h1>
+    <div class="flex items-center justify-between w-full mt-10 px-50">
+      {% if collection.products.size > 0 %}
+        <div>
+          <button
+            @click="filterSlide = true"
+            type="button"
+            class="w-26 flex justify-between shadow-xl text-black py-2 pl-4 pr-6 rounded-md cursor-pointer border-1"
+          >
+            {% render 'icon-filter-horizontal' %}
+            <span>filters</span>
+          </button>
+        </div>
+        <div>
+          {% render 'sort-select' %}
+        </div>
+      {% endif %}
+    </div>
     <div id="product-list-container">
       {% paginate collection.products by section.settings.number_of_products_per_page %}
-        <h1 class="text-4xl font-bold text-center">{{ collection.title }}</h1>
         <div class="max-w-6xl mx-auto">
-          <div class="w-auto top-0 left-0 my-4">
-            {% if collection.products.size > 0 %}
-              <button
-                @click="filterSlide = true"
-                type="button"
-                class="w-26 flex justify-between shadow-xl text-black py-2 ml-3 pl-4 pr-6 rounded-md cursor-pointer border-1"
-              >
-                {% render 'icon-filter-horizontal' %}
-                <span>filters</span>
-              </button>
-            {% endif %}
-          </div>
           <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
             {% for product in collection.products %}
               {% render 'product-card', product_item: product %}

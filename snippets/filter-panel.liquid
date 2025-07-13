@@ -32,7 +32,9 @@
             <div class="flex items-center justify-between w-full">
               <span class="filter-label">{{ filter.label }}</span>
               {% if filter.active_values.size > 0 %}
-                <span class="filter-bubble text-xs bg-black text-white rounded-full px-2 py-0.5">{{ filter.active_values.size }}</span>
+                <span class="filter-bubble text-xs bg-black text-white rounded-full px-2 py-0.5">
+                  {{- filter.active_values.size -}}
+                </span>
               {% endif %}
             </div>
             {% render 'icon-arrow' %}
@@ -44,12 +46,17 @@
                 <ul class="space-y-2">
                   <li>
                     <label class="flex items-center gap-2">
-                      <input type="checkbox"
+                      <input
+                        type="checkbox"
                         name="{{ filter.param_name }}"
                         value="{{ filter.true_value.value }}"
                         id="Filter-{{ filter.param_name }}"
-                        {% if filter.true_value.active %}checked{% endif %}
-                        {% if filter.true_value.count == 0 and filter.true_value.active == false %}disabled{% endif %}
+                        {% if filter.true_value.active %}
+                          checked
+                        {% endif %}
+                        {% if filter.true_value.count == 0 and filter.true_value.active == false %}
+                          disabled
+                        {% endif %}
                         class="accent-black"
                       >
                       {{ filter.true_value.label }}
@@ -57,12 +64,17 @@
                   </li>
                   <li>
                     <label class="flex items-center gap-2">
-                      <input type="checkbox"
+                      <input
+                        type="checkbox"
                         name="{{ filter.param_name }}"
                         value="{{ filter.false_value.value }}"
                         id="Filter-{{ filter.param_name }}"
-                        {% if filter.false_value.active %}checked{% endif %}
-                        {% if filter.false_value.count == 0 and filter.false_value.active == false %}disabled{% endif %}
+                        {% if filter.false_value.active %}
+                          checked
+                        {% endif %}
+                        {% if filter.false_value.count == 0 and filter.false_value.active == false %}
+                          disabled
+                        {% endif %}
                         class="filter-check accent-black"
                       >
                       {{ filter.false_value.label }}
@@ -80,8 +92,12 @@
                           name="{{ filter_value.param_name }}"
                           value="{{ filter_value.value }}"
                           id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
-                          {% if filter_value.active %}checked{% endif %}
-                          {% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
+                          {% if filter_value.active %}
+                            checked
+                          {% endif %}
+                          {% if filter_value.count == 0 and filter_value.active == false %}
+                            disabled
+                          {% endif %}
                           class="filter-check accent-black"
                         >
                         <span>
@@ -102,7 +118,10 @@
                                   {{ color }} {{ angle }}deg{% assign angle = angle | plus: angle_increment %} {{ angle }}deg{% unless forloop.last %}, {% endunless %}
                                 {% endfor %}
                               {% endcapture %}
-                              <span class="inline-block w-5 h-5 rounded-full border" style="background: conic-gradient({{ conic_gradient }}); transform: rotateZ({{ rotation }});"></span>
+                              <span
+                                class="inline-block w-5 h-5 rounded-full border"
+                                style="background: conic-gradient({{ conic_gradient }}); transform: rotateZ({{ rotation }});"
+                              ></span>
                             {% when 'image' %}
                               {{
                                 filter_value.display.value
@@ -123,7 +142,8 @@
                 <div class="flex flex-col gap-3">
                   <div class="flex items-center gap-2">
                     <span>{{ cart.currency.symbol }}</span>
-                    <input name="{{ filter.min_value.param_name }}"
+                    <input
+                      name="{{ filter.min_value.param_name }}"
                       id="Filter-{{ filter.min_value.param_name }}"
                       {% if filter.min_value.value %}
                         value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
@@ -138,7 +158,8 @@
                   </div>
                   <div class="flex items-center gap-2">
                     <span>{{ cart.currency.symbol }}</span>
-                    <input name="{{ filter.max_value.param_name }}"
+                    <input
+                      name="{{ filter.max_value.param_name }}"
                       id="Filter-{{ filter.max_value.param_name }}"
                       {% if filter.max_value.value %}
                         value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"

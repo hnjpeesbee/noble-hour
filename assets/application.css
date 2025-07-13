@@ -407,6 +407,9 @@
   .mt-8 {
     margin-top: calc(var(--spacing) * 8);
   }
+  .mt-10 {
+    margin-top: calc(var(--spacing) * 10);
+  }
   .-mr-2 {
     margin-right: calc(var(--spacing) * -2);
   }
@@ -700,8 +703,23 @@
   .justify-center {
     justify-content: center;
   }
+  .justify-center-safe {
+    justify-content: safe center;
+  }
   .justify-end {
     justify-content: flex-end;
+  }
+  .justify-evenly {
+    justify-content: space-evenly;
+  }
+  .justify-stretch {
+    justify-content: stretch;
+  }
+  .justify-items-normal {
+    justify-items: normal;
+  }
+  .justify-items-stretch {
+    justify-items: stretch;
   }
   .gap-1 {
     gap: calc(var(--spacing) * 1);
@@ -768,6 +786,9 @@
   }
   .gap-x-4 {
     column-gap: calc(var(--spacing) * 4);
+  }
+  .gap-x-96 {
+    column-gap: calc(var(--spacing) * 96);
   }
   .space-x-2 {
     :where(& > :not(:last-child)) {
@@ -1014,6 +1035,24 @@
   }
   .px-10 {
     padding-inline: calc(var(--spacing) * 10);
+  }
+  .px-50 {
+    padding-inline: calc(var(--spacing) * 50);
+  }
+  .px-56 {
+    padding-inline: calc(var(--spacing) * 56);
+  }
+  .px-60 {
+    padding-inline: calc(var(--spacing) * 60);
+  }
+  .px-64 {
+    padding-inline: calc(var(--spacing) * 64);
+  }
+  .px-72 {
+    padding-inline: calc(var(--spacing) * 72);
+  }
+  .px-96 {
+    padding-inline: calc(var(--spacing) * 96);
   }
   .py-0 {
     padding-block: calc(var(--spacing) * 0);
