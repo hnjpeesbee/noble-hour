@@ -1,0 +1,39 @@
+<div id="product-list-container">
+  {% paginate search.results by 8 %}
+    {% if search.results.size > 0 %}
+      <div class="max-w-6xl mx-auto">
+        <p class="text-gray-700 text-center my-10">
+          {{ search.results.size }} result for the search term <b>{{ search.terms | escape }}</b>
+        </p>
+        {% if search.results.size > 0 %}
+          <button
+            @click="filterSlide = true"
+            type="button"
+            class="w-26 flex justify-between shadow-xl text-black py-2 ml-3 pl-4 pr-6 rounded-md cursor-pointer border-1"
+          >
+            {% render 'icon-filter-horizontal' %}
+            <span>filters</span>
+          </button>
+        {% endif %}
+        <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4">
+          {% for item in search.results %}
+            {% case item.object_type %}
+              {% when 'product' %}
+                {% render 'product-card', product_item: item %}
+              {% else %}
+
+            {% endcase %}
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <div class="my-10">
+        <p class="text-center">
+          No results for the search term: {{ search.terms | escape }}. Try to use a different keyword
+        </p>
+      </div>
+    {% endif %}
+
+    {% render 'pagination', pagination: paginate %}
+  {% endpaginate %}
+</div>

@@ -1,8 +1,8 @@
-<filter-grid class="relative" x-data="{ filterSlide : false }">  
+<filter-grid data-section-id="{{ section.id }}" data-search class="relative" x-data="{ filterSlide : false }">
   <div class="container mx-auto">
-    {% paginate search.results by 12 %}
-      <h1 class="text-xl my-4 text-center">Search Results</h1>
-      <div class="flex justify-center items-center">
+    <h1 class="text-xl my-4 text-center">Search Results</h1>
+    <div class="flex justify-center items-center">
+      <search-form>
         <form action="{{ routes.search_url }}" method="get" class="flex rounded border">
           <div class="relative flex text-gray-500 px-10">
             <input
@@ -17,8 +17,10 @@
             </button>
           </div>
         </form>
-      </div>
-      {% if search.performed %}
+      </search-form>
+    </div>
+    <div id="product-list-container">
+      {% paginate search.results by 8 %}
         {% if search.results.size > 0 %}
           <div class="max-w-6xl mx-auto">
             <p class="text-gray-700 text-center my-10">
@@ -46,14 +48,16 @@
             </div>
           </div>
         {% else %}
-          <div class="text-center-my-4">
-            <p>No results for the search term: {{ search.terms | escape }}. Try to use a different keyword</p>
+          <div class="my-10">
+            <p class="text-center">
+              No results for the search term: {{ search.terms | escape }}. Try to use a different keyword
+            </p>
           </div>
         {% endif %}
-      {% endif %}
 
-      {% render 'pagination', pagination: paginate %}
-    {% endpaginate %}
+        {% render 'pagination', pagination: paginate %}
+      {% endpaginate %}
+    </div>
   </div>
 
   {% render 'filter-panel' %}

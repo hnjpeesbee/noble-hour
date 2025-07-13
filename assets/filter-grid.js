@@ -4,9 +4,16 @@ class FilterGrid extends HTMLElement {
   }
 
   connectedCallback() {
+    this.searchPage = this.hasAttribute('data-search');
+
     this.addEventListener('filters:changed', e => {
       const formData = e.detail.formData;
       this.handleFilterChange(formData);
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      this.queryInput = urlParams.get('q');
     });
   }
 
@@ -15,9 +22,9 @@ class FilterGrid extends HTMLElement {
 
     const sectionId = this.dataset.sectionId;
     params.set('section_id', sectionId);
-
+    
     const url = this.getUrl(window.location.pathname, params);
-
+    
     try {
       const response = await fetch(url);
       const text = await response.text();
@@ -41,7 +48,12 @@ class FilterGrid extends HTMLElement {
   }
 
   getUrl(path, params) {
-    const url = `${path}?${params.toString()}`;
+    let url = `${path}?${params.toString()}`;
+
+    if (this.searchPage) {
+      url = `${path}?q=${this.queryInput}&${params.toString()}`;
+    }
+
     return url;
   }
 }
