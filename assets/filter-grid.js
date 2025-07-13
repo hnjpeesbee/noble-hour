@@ -12,7 +12,9 @@ class FilterGrid extends HTMLElement {
 
   async handleFilterChange(formData) {
     const params = new URLSearchParams(formData);
-    params.set('section_id', 'template-collection');
+
+    const sectionId = this.dataset.sectionId;
+    params.set('section_id', sectionId);
 
     const url = this.getUrl(window.location.pathname, params);
 
