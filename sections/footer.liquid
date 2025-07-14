@@ -1,14 +1,20 @@
 <footer class="pt-4 bg-gray-100 ">
   <div class="flex items-center justify-between">
-    {% render 'logo' %}
+    <a href="{{ routes.root_url }}">
+      {% render 'logo' %}
+    </a>
     <div class="flex gap-x-4 md:gap-x-8 text-gray-800 text-xs md:text-base font-medium">
       {% for link in section.settings.menu.links %}
         {{ link.title | link_to: link.url }}
       {% endfor %}
     </div>
     <div class="flex align-middle gap-x-2 md:gap-x-4 pr-5">
-      {% render 'icon-fb' %}
-      {% render 'icon-ig' %}
+      <a href="https://www.facebook.com/shopify">
+        {% render 'icon-fb' %}
+      </a>
+      <a href="https://www.instagram.com/shopify/">
+        {% render 'icon-ig' %}
+      </a>
     </div>
   </div>
 
