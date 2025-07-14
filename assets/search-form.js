@@ -36,7 +36,7 @@ class SearchForm extends HTMLElement {
 
       const uiUrl = new URLSearchParams(params);
       uiUrl.delete('section_id');
-      window.history.replaceState({}, '', uiUrl);
+      window.history.replaceState({}, '', `${window.location.pathname}?${uiUrl}`);
 
       if (newResults && this.resultsContainer) {
         this.resultsContainer.replaceWith(newResults);
