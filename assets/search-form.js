@@ -5,11 +5,11 @@ class SearchForm extends HTMLElement {
   }
 
   connectedCallback() {
-    this.form = this.querySelector('form');
-    this.input = this.form.querySelector('input[name="q"]');
+    this.input = this.querySelector('input[name="q"]');
     this.resultsContainer = document.querySelector('#product-list-container');
 
-    this.input.addEventListener('keyup', () => {
+    this.input.addEventListener('keyup', (event) => {
+      event.preventDefault();
       clearTimeout(this.debounceTimer);
       this.debounceTimer = setTimeout(() => {
         this.performSearch(this.input.value.trim());
@@ -24,12 +24,19 @@ class SearchForm extends HTMLElement {
       q: query,
       section_id: 'main-search-results'
     });
-    console.log(params.toString());
+
+    const filterComponent = document.querySelector('filter-grid');
+    const url = `${window.location.pathname}?${params}`;
+
     try {
-      const response = await fetch(`/search?${params.toString()}`);
+      const response = await fetch(url);
       const text = await response.text();
       const doc = new DOMParser().parseFromString(text, 'text/html');
       const newResults = doc.querySelector('#product-list-container');
+
+      const uiUrl = new URLSearchParams(params);
+      uiUrl.delete('section_id');
+      window.history.replaceState({}, '', uiUrl);
 
       if (newResults && this.resultsContainer) {
         this.resultsContainer.replaceWith(newResults);
