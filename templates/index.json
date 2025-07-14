@@ -11,19 +11,31 @@
   "sections": {
     "hero": {
       "type": "template-hero",
-      "settings": {}
-    },
-    "gallery": {
-      "type": "template-product-showcase",
-      "settings": {}
+      "settings": {
+        "tagline": "Where Time Meets Legacy",
+        "description": "``Luxury timepieces for those who value every second. Timeless design. Tradition in every detail.``",
+        "hero_image": "shopify://shop_images/hero.jpg"
+      }
     },
     "collections": {
       "type": "template-list-collections",
-      "settings": {}
+      "settings": {
+        "title": "Collections"
+      }
     },
     "limited": {
       "type": "template-limited-edition",
-      "settings": {}
+      "settings": {
+        "product_handle": "limited-seiko-decor-clocks-az753s"
+      }
+    },
+    "gallery": {
+      "type": "template-product-showcase",
+      "settings": {
+        "title": "Product Showcase",
+        "product_showcase": "automatic-movement",
+        "number_of_products_to_show": 6
+      }
     }
   },
   "order": [
