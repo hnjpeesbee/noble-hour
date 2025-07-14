@@ -37,6 +37,7 @@ class FilterGrid extends HTMLElement {
         currentGridList.replaceWith(newGridList);
       }
 
+      //for applying the correct url and when a user bookmarked it, it will be saved as they filtered.
       const uiUrlParams = new URLSearchParams(params);
       uiUrlParams.delete('section_id'); // the original url is only for section rendering, when accidentally reload, the ui breaks
 
